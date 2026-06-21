@@ -2,7 +2,32 @@
 <html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    
+    <!-- ===== SEO & SOCIAL META TAGS ===== -->
+    <meta name="description" content="Poetry Time Hub - Experience poetry that changes with time. Urdu, Hindi, and Roman Urdu poetry with cinematic animations.">
+    <meta name="keywords" content="poetry, urdu poetry, hindi poetry, shayari, ghazal, islamic poetry, love poetry, sad poetry">
+    <meta name="author" content="Poetry Time Hub">
+    <meta name="theme-color" content="#1a1a2e">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Poetry Time Hub - شاعری کا وقت">
+    <meta property="og:description" content="Experience poetry that changes with time. Urdu, Hindi, and Roman Urdu poetry with cinematic animations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://poetrytimehub.com">
+    <meta property="og:image" content="https://poetrytimehub.com/og-image.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Poetry Time Hub - شاعری کا وقت">
+    <meta name="twitter:description" content="Experience poetry that changes with time.">
+    
+    <!-- ===== PWA MANIFEST ===== -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <title>Poetry Time Hub - شاعری کا وقت</title>
     
     <style>
@@ -12,6 +37,9 @@
         
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
         
+        /* Load Urdu Fonts from Google */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@300;400;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -19,7 +47,7 @@
         }
         
         :root {
-            --font-urdu: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Alvi Nastaleeq', serif;
+            --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Alvi Nastaleeq', serif;
             --font-roman: 'Poppins', sans-serif;
             --font-hindi: 'Noto Sans Devanagari', 'Mangal', 'Nirmala UI', sans-serif;
             
@@ -28,6 +56,13 @@
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.8);
+            
+            --primary-color: #FF6B35;
+            --secondary-color: #FFD700;
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -40,6 +75,8 @@
             margin: 0;
             padding: 0;
             transition: all 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         body.lang-roman {
@@ -58,6 +95,7 @@
             height: 100%;
             z-index: 0;
             display: block;
+            will-change: transform;
         }
         
         #vignette {
@@ -87,7 +125,8 @@
             position: relative;
             z-index: 2;
             min-height: 100vh;
-            padding: 1rem;
+            padding: 0.8rem;
+            padding-bottom: 4rem;
         }
         
         /* ===== GLASS HEADER ===== */
@@ -95,15 +134,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 2rem;
+            padding: 0.6rem 1.2rem;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             position: sticky;
-            top: 0.8rem;
+            top: 0.5rem;
             z-index: 100;
             box-shadow: var(--glass-shadow);
         }
@@ -111,18 +150,18 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
         }
         
         .logo-icon {
-            font-size: 2rem;
+            font-size: 1.6rem;
             animation: float 3s ease-in-out infinite;
         }
         
         .logo h1 {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #FFD700, #FF6B35);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -131,29 +170,30 @@
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
         }
         
         .language-switcher {
             display: flex;
-            gap: 0.2rem;
+            gap: 0.15rem;
             background: var(--glass-bg);
-            padding: 0.25rem;
+            padding: 0.2rem;
             border-radius: 50px;
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
         }
         
         .lang-btn {
-            padding: 0.4rem 0.9rem;
+            padding: 0.3rem 0.7rem;
             border: none;
             background: transparent;
             color: var(--text-secondary);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: 400;
+            font-family: var(--font-roman);
         }
         
         .lang-btn.active {
@@ -168,11 +208,11 @@
         
         /* ===== HERO SECTION ===== */
         #hero {
-            min-height: 70vh;
+            min-height: 65vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 0.5rem;
         }
         
         .hero-content {
@@ -182,9 +222,9 @@
         
         /* ===== TIME GREETING ===== */
         .time-greeting {
-            padding: 1.2rem 2rem;
+            padding: 1rem 1.5rem;
             border-radius: 16px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             text-align: center;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -193,47 +233,48 @@
         }
         
         .time-greeting h2 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             margin-bottom: 0.2rem;
             font-weight: 600;
         }
         
         .time-greeting p {
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.8;
         }
         
         #timeIndicator {
-            width: 100px;
+            width: 80px;
             height: 3px;
-            margin: 0.5rem auto 0;
+            margin: 0.4rem auto 0;
             border-radius: 2px;
-            background: linear-gradient(90deg, #FFD700, #FF6B35);
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             animation: pulse 2s ease-in-out infinite;
         }
         
         /* ===== POETRY DISPLAY ===== */
         .poetry-display {
-            padding: 2.5rem 3rem;
+            padding: 1.8rem 1.5rem;
             text-align: center;
             background: var(--glass-bg);
             backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             box-shadow: var(--glass-shadow);
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
         }
         
         .poetry-display:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
         }
         
         .poetry-container {
-            min-height: 200px;
+            min-height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
         
         #poetryLines {
@@ -242,9 +283,9 @@
         }
         
         .poetry-line {
-            font-size: clamp(1.5rem, 4.5vw, 3.2rem);
-            line-height: 2;
-            margin: 0.3rem 0;
+            font-size: clamp(1.2rem, 4vw, 2.8rem);
+            line-height: 1.8;
+            margin: 0.2rem 0;
             font-weight: 400;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
             opacity: 1;
@@ -264,23 +305,60 @@
             font-family: var(--font-hindi);
         }
         
+        /* ===== POETRY TYPE BADGE ===== */
+        .poetry-type-badge {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-family: var(--font-roman);
+            background: rgba(255, 107, 53, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            margin-bottom: 0.3rem;
+        }
+        
+        /* ===== KEYWORD DISPLAY ===== */
+        .keyword-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding: 0.5rem 0;
+            margin-top: 0.3rem;
+            border-top: 1px solid var(--glass-border);
+        }
+        
+        .keyword-item {
+            padding: 0.2rem 0.8rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-family: var(--font-roman);
+            opacity: 0.7;
+            animation: fadeIn 0.5s ease;
+        }
+        
         /* ===== POETRY INFO ===== */
         .poetry-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 0.8rem 0;
-            padding: 0.5rem 0;
+            margin: 0.5rem 0;
+            padding: 0.4rem 0;
             border-top: 1px solid var(--glass-border);
             border-bottom: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 0.3rem;
         }
         
         #poetryCategory {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             opacity: 0.7;
         }
         #poetryCounter {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             opacity: 0.7;
             font-family: var(--font-roman);
         }
@@ -290,12 +368,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1.2rem;
-            margin: 1.2rem 0;
+            gap: 0.8rem;
+            margin: 0.8rem 0;
         }
         
         .glass-btn {
-            padding: 0.6rem 1.4rem;
+            padding: 0.5rem 1rem;
             border: 1px solid var(--glass-border);
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -303,9 +381,11 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-family: var(--font-roman);
-            min-width: 50px;
+            min-width: 44px;
+            min-height: 44px;
+            touch-action: manipulation;
         }
         
         .glass-btn:hover {
@@ -320,25 +400,28 @@
         .action-buttons {
             display: flex;
             justify-content: center;
-            gap: 0.8rem;
-            margin-top: 0.8rem;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
             flex-wrap: wrap;
         }
         
         .action-btn {
-            padding: 0.5rem 1.2rem;
+            padding: 0.4rem 1rem;
             border: none;
             background: rgba(255, 255, 255, 0.08);
             color: white;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.3rem;
             font-family: var(--font-roman);
             border: 1px solid var(--glass-border);
+            min-height: 40px;
+            min-width: 44px;
+            touch-action: manipulation;
         }
         
         .action-btn:hover {
@@ -353,16 +436,16 @@
         .poetry-tags {
             display: flex;
             justify-content: center;
-            gap: 0.6rem;
-            margin-top: 0.8rem;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
             flex-wrap: wrap;
         }
         
         .tag {
-            padding: 0.2rem 1rem;
+            padding: 0.15rem 0.8rem;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             opacity: 0.7;
             font-family: var(--font-roman);
             border: 1px solid var(--glass-border);
@@ -371,13 +454,80 @@
         /* ===== TIME SCHEDULE BADGE ===== */
         .time-schedule-badge {
             display: inline-block;
-            padding: 0.4rem 1.2rem;
+            padding: 0.3rem 1rem;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-family: var(--font-roman);
-            margin: 0.5rem 0;
+            margin: 0.3rem 0;
             background: rgba(255, 107, 53, 0.2);
             border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        /* ===== FAVORITES SECTION ===== */
+        .favorites-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .favorites-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+        
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .favorite-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .favorite-item .fav-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            flex: 1;
+            font-family: var(--font-urdu);
+        }
+        
+        .favorite-item .fav-remove {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            color: #ff6b6b;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-family: var(--font-roman);
+            min-height: 36px;
+            touch-action: manipulation;
+        }
+        
+        .favorite-item .fav-remove:hover {
+            background: rgba(255, 0, 0, 0.2);
+        }
+        
+        .no-favorites {
+            text-align: center;
+            padding: 1.5rem;
+            opacity: 0.4;
+            font-size: 0.9rem;
         }
         
         /* ===== CONTROL PANEL ===== */
@@ -386,14 +536,14 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            padding: 1.2rem;
+            margin: 1rem 0;
             box-shadow: var(--glass-shadow);
         }
         
         .control-panel h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
             text-align: center;
             color: var(--text-primary);
         }
@@ -401,15 +551,15 @@
         .control-panel input,
         .control-panel textarea {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 0.8rem;
             border-radius: 10px;
             border: 1px solid var(--glass-border);
             background: rgba(255, 255, 255, 0.06);
             color: white;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-family: var(--font-urdu);
             transition: all 0.3s ease;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
         
         .control-panel input::placeholder,
@@ -420,28 +570,30 @@
         .control-panel input:focus,
         .control-panel textarea:focus {
             outline: none;
-            border-color: #FF6B35;
+            border-color: var(--primary-color);
             background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 20px rgba(255, 107, 53, 0.1);
         }
         
         .control-panel textarea {
-            height: 80px;
+            height: 70px;
             resize: vertical;
         }
         
         .control-panel .btn-add {
-            padding: 0.8rem 2rem;
-            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #FF4500);
             color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.3s ease;
             font-family: var(--font-roman);
             width: 100%;
+            min-height: 44px;
+            touch-action: manipulation;
         }
         
         .control-panel .btn-add:hover {
@@ -453,11 +605,71 @@
         }
         
         .search-stats {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             opacity: 0.5;
             text-align: center;
-            margin-top: 0.5rem;
+            margin-top: 0.3rem;
             font-family: var(--font-roman);
+        }
+        
+        /* ===== BACKUP SECTION ===== */
+        .backup-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .backup-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+        
+        .backup-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .backup-btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: var(--font-roman);
+            transition: all 0.3s ease;
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+        
+        .backup-btn.export {
+            background: rgba(74, 144, 226, 0.2);
+            color: #4A90E2;
+            border: 1px solid rgba(74, 144, 226, 0.3);
+        }
+        
+        .backup-btn.export:hover {
+            background: rgba(74, 144, 226, 0.3);
+        }
+        
+        .backup-btn.import {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .backup-btn.import:hover {
+            background: rgba(76, 175, 80, 0.3);
+        }
+        
+        #importFileInput {
+            display: none;
         }
         
         /* ===== IMAGE TEMPLATE SECTION ===== */
@@ -466,29 +678,29 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            padding: 1.2rem;
+            margin: 1rem 0;
             box-shadow: var(--glass-shadow);
         }
         
         .template-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
             text-align: center;
         }
         
         .template-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.8rem;
+            margin: 0.8rem 0;
         }
         
         .template-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
-            padding: 1rem;
+            padding: 0.8rem;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -501,35 +713,37 @@
         
         .template-card .template-preview {
             width: 100%;
-            height: 120px;
+            height: 100px;
             border-radius: 8px;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: white;
             font-family: var(--font-urdu);
-            padding: 0.5rem;
+            padding: 0.3rem;
             text-align: center;
             line-height: 1.6;
         }
         
         .template-card .template-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.3rem;
             justify-content: center;
             flex-wrap: wrap;
         }
         
         .template-card .template-actions button {
-            padding: 0.3rem 1rem;
+            padding: 0.25rem 0.7rem;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-family: var(--font-roman);
             transition: all 0.3s ease;
+            min-height: 32px;
+            touch-action: manipulation;
         }
         
         .btn-edit-template {
@@ -552,34 +766,44 @@
             background: rgba(74, 144, 226, 0.3);
         }
         
+        .btn-whatsapp-template {
+            background: rgba(37, 211, 102, 0.2);
+            color: #25D366;
+            border: 1px solid rgba(37, 211, 102, 0.3) !important;
+        }
+        
+        .btn-whatsapp-template:hover {
+            background: rgba(37, 211, 102, 0.3);
+        }
+        
         /* ===== ACTIVE POSTS SECTION ===== */
         .active-posts-section {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            padding: 1.2rem;
+            margin: 1rem 0;
             box-shadow: var(--glass-shadow);
         }
         
         .active-posts-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
             text-align: center;
         }
         
         .active-posts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.8rem;
         }
         
         .active-post-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
-            padding: 1rem;
+            padding: 0.8rem;
             transition: all 0.3s ease;
         }
         
@@ -592,17 +816,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
+            flex-wrap: wrap;
+            gap: 0.3rem;
         }
         
         .active-post-card .post-title {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
         }
         
         .active-post-card .post-status {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.8rem;
+            font-size: 0.6rem;
+            padding: 0.15rem 0.6rem;
             border-radius: 50px;
             font-family: var(--font-roman);
         }
@@ -618,17 +844,17 @@
         }
         
         .active-post-card .post-time {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             opacity: 0.5;
             font-family: var(--font-roman);
         }
         
         /* ===== POSTS CONTAINER ===== */
         #postsContainer {
-            margin: 1.5rem 0;
+            margin: 1rem 0;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 0.8rem;
         }
         
         .post-card {
@@ -636,7 +862,7 @@
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             transition: all 0.3s ease;
             box-shadow: var(--glass-shadow);
             position: relative;
@@ -644,15 +870,15 @@
         }
         
         .post-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             background: rgba(255, 255, 255, 0.12);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
         .post-card .post-text {
-            font-size: 1.2rem;
-            line-height: 2;
-            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 0.3rem;
             font-family: var(--font-urdu);
         }
         
@@ -660,16 +886,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             opacity: 0.5;
             font-family: var(--font-roman);
-            padding-top: 0.5rem;
+            padding-top: 0.4rem;
             border-top: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 0.3rem;
         }
         
         .post-card .post-meta .post-category {
             background: rgba(255, 107, 53, 0.15);
-            padding: 0.2rem 0.8rem;
+            padding: 0.15rem 0.6rem;
             border-radius: 50px;
             border: 1px solid rgba(255, 107, 53, 0.2);
         }
@@ -678,12 +906,14 @@
             background: rgba(255, 0, 0, 0.1);
             border: 1px solid rgba(255, 0, 0, 0.2);
             color: #ff6b6b;
-            padding: 0.3rem 0.8rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             transition: all 0.3s ease;
             font-family: var(--font-roman);
+            min-height: 32px;
+            touch-action: manipulation;
         }
         
         .post-card .post-delete:hover {
@@ -693,21 +923,21 @@
         
         .no-posts {
             text-align: center;
-            padding: 3rem;
+            padding: 2rem;
             opacity: 0.4;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         /* ===== SECTIONS ===== */
         .section {
-            padding: 2.5rem 0;
+            padding: 1.5rem 0;
             max-width: 1100px;
             margin: 0 auto;
         }
         
         .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.8rem;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
             text-align: center;
             font-weight: 600;
         }
@@ -715,14 +945,14 @@
         /* ===== CATEGORIES ===== */
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.8rem;
             max-width: 900px;
             margin: 0 auto;
         }
         
         .category-card {
-            padding: 1.2rem 0.8rem;
+            padding: 1rem 0.6rem;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
@@ -730,10 +960,11 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            touch-action: manipulation;
         }
         
         .category-card:hover {
-            transform: translateY(-6px) scale(1.02);
+            transform: translateY(-4px) scale(1.02);
             background: rgba(255, 255, 255, 0.15);
         }
         .category-card:active {
@@ -742,16 +973,16 @@
         
         .category-card.active {
             background: rgba(255, 107, 53, 0.15);
-            border-color: #FF6B35;
+            border-color: var(--primary-color);
         }
         
         .category-card span {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
         .category-card h3 {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 400;
             opacity: 0.9;
         }
@@ -759,14 +990,14 @@
         /* ===== TOOLS ===== */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
             max-width: 1000px;
             margin: 0 auto;
         }
         
         .tool-card {
-            padding: 1.8rem 1.2rem;
+            padding: 1.5rem 1rem;
             text-align: center;
             cursor: pointer;
             background: var(--glass-bg);
@@ -777,61 +1008,101 @@
         }
         
         .tool-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px);
             background: rgba(255, 255, 255, 0.12);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
         .tool-card span {
-            font-size: 2.5rem;
+            font-size: 2rem;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
         .tool-card h3 {
-            font-size: 1rem;
+            font-size: 0.85rem;
             margin-bottom: 0.2rem;
         }
         .tool-card p {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             opacity: 0.6;
         }
         
         /* ===== FOOTER ===== */
         footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 1rem;
             border-top: 1px solid var(--glass-border);
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
         
         footer p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.7;
         }
         .footer-time {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             opacity: 0.5;
-            margin-top: 0.3rem;
+            margin-top: 0.2rem;
             font-family: var(--font-roman);
+        }
+        
+        /* ===== INSTALL BANNER ===== */
+        .install-banner {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            margin: 0.5rem 0;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .install-banner.show {
+            display: flex;
+        }
+        
+        .install-banner p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .install-banner .btn-install {
+            padding: 0.5rem 1.2rem;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: var(--font-roman);
+            min-height: 40px;
+            touch-action: manipulation;
         }
         
         /* ===== NOTIFICATION ===== */
         .notification {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 12px 28px;
+            padding: 10px 20px;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             color: white;
-            font-size: 1rem;
+            font-size: 0.85rem;
             z-index: 1000;
             animation: fadeIn 0.4s ease;
             font-family: var(--font-roman);
             box-shadow: var(--glass-shadow);
+            max-width: 90%;
+            text-align: center;
         }
         
         /* ===== EDIT MODAL ===== */
@@ -848,56 +1119,61 @@
             align-items: center;
             justify-content: center;
             animation: fadeIn 0.3s ease;
+            padding: 1rem;
         }
         
         .modal-content {
             background: #1a1a2e;
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 2rem;
+            padding: 1.5rem;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
         }
         
         .modal-content h2 {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
         
         .modal-content input,
         .modal-content textarea {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.7rem;
             border-radius: 10px;
             border: 1px solid var(--glass-border);
             background: rgba(255, 255, 255, 0.06);
             color: white;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-family: var(--font-urdu);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
         
         .modal-content .modal-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: center;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
         }
         
         .modal-content .modal-actions button {
-            padding: 0.6rem 2rem;
+            padding: 0.5rem 1.5rem;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-family: var(--font-roman);
             transition: all 0.3s ease;
+            min-height: 40px;
+            touch-action: manipulation;
         }
         
         .btn-modal-save {
-            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            background: linear-gradient(135deg, var(--primary-color), #FF4500);
             color: white;
         }
         
@@ -922,7 +1198,7 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-8px);
             }
         }
         
@@ -956,14 +1232,14 @@
             }
             to {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-15px);
             }
         }
         
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -972,16 +1248,17 @@
         }
         
         .post-card {
-            animation: slideIn 0.4s ease;
+            animation: slideIn 0.3s ease;
         }
         
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .glass-header {
                 flex-direction: column;
-                gap: 0.8rem;
-                padding: 0.8rem 1rem;
-                top: 0.5rem;
+                gap: 0.5rem;
+                padding: 0.6rem 1rem;
+                top: 0.3rem;
+                border-radius: 12px;
             }
             .header-controls {
                 width: 100%;
@@ -989,39 +1266,43 @@
                 flex-wrap: wrap;
             }
             .poetry-display {
-                padding: 1.5rem;
+                padding: 1.2rem 1rem;
+                border-radius: 18px;
             }
             .poetry-line {
-                font-size: clamp(1rem, 4vw, 1.8rem);
+                font-size: clamp(0.9rem, 3.5vw, 1.6rem);
             }
             .time-greeting h2 {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             .category-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 0.8rem;
+                gap: 0.6rem;
             }
             .tools-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 1rem;
+                gap: 0.8rem;
             }
             .action-buttons {
-                gap: 0.5rem;
+                gap: 0.4rem;
             }
             .action-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.75rem;
+                padding: 0.3rem 0.7rem;
+                font-size: 0.65rem;
+                min-height: 36px;
+                min-width: 36px;
             }
             .glass-btn {
-                padding: 0.4rem 1rem;
-                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+                min-height: 40px;
                 min-width: 40px;
             }
             .poetry-controls {
-                gap: 0.8rem;
+                gap: 0.6rem;
             }
             .control-panel {
-                padding: 1rem;
+                padding: 0.8rem;
             }
             .template-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1029,43 +1310,78 @@
             .active-posts-grid {
                 grid-template-columns: 1fr;
             }
+            .favorites-grid {
+                max-height: 200px;
+            }
+            .backup-buttons {
+                flex-direction: column;
+            }
+            .backup-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .install-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .install-banner .btn-install {
+                width: 100%;
+            }
         }
         
         @media (max-width: 480px) {
             #app {
-                padding: 0.5rem;
+                padding: 0.4rem;
+                padding-bottom: 3rem;
             }
             .category-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
             }
             .tools-grid {
                 grid-template-columns: 1fr;
             }
             .poetry-display {
-                padding: 1rem;
+                padding: 0.8rem;
+                border-radius: 14px;
             }
             .logo h1 {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             .logo-icon {
-                font-size: 1.5rem;
-            }
-            .time-greeting {
-                padding: 0.8rem 1rem;
-            }
-            .time-greeting h2 {
                 font-size: 1.3rem;
             }
+            .time-greeting {
+                padding: 0.6rem 1rem;
+            }
+            .time-greeting h2 {
+                font-size: 1.2rem;
+            }
             .post-card .post-text {
-                font-size: 1rem;
+                font-size: 0.85rem;
             }
             .template-grid {
                 grid-template-columns: 1fr;
             }
+            .favorite-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .favorite-item .fav-remove {
+                width: 100%;
+                text-align: center;
+            }
+            .modal-content {
+                padding: 1rem;
+            }
+            .modal-content h2 {
+                font-size: 1.1rem;
+            }
         }
         
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
         ::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.05);
@@ -1076,37 +1392,6 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.25);
-        }
-        
-        /* ===== LANGUAGE-SPECIFIC HIDING ===== */
-        .lang-urdu {
-            display: block;
-        }
-        .lang-roman {
-            display: none;
-        }
-        .lang-hindi {
-            display: none;
-        }
-        
-        body.lang-roman .lang-urdu {
-            display: none;
-        }
-        body.lang-roman .lang-roman {
-            display: block;
-        }
-        body.lang-roman .lang-hindi {
-            display: none;
-        }
-        
-        body.lang-hindi .lang-urdu {
-            display: none;
-        }
-        body.lang-hindi .lang-roman {
-            display: none;
-        }
-        body.lang-hindi .lang-hindi {
-            display: block;
         }
     </style>
 </head>
@@ -1119,6 +1404,12 @@
     <div id="vignette"></div>
     <div id="lightOverlay"></div>
     
+    <!-- ===== INSTALL BANNER (PWA) ===== -->
+    <div class="install-banner" id="installBanner">
+        <p>📱 Install Poetry Time Hub as an app for a better experience!</p>
+        <button class="btn-install" id="installBtn">📲 Install</button>
+    </div>
+    
     <!-- ===== MAIN APP ===== -->
     <div id="app">
         
@@ -1126,15 +1417,13 @@
         <header class="glass-header">
             <div class="logo">
                 <span class="logo-icon">📜</span>
-                <h1 class="lang-urdu">Poetry Time Hub</h1>
-                <h1 class="lang-roman" style="display:none;">Poetry Time Hub</h1>
-                <h1 class="lang-hindi" style="display:none;">Poetry Time Hub</h1>
+                <h1 id="appTitle">Poetry Time Hub</h1>
             </div>
             <div class="header-controls">
                 <div class="language-switcher">
-                    <button class="lang-btn active" data-lang="ur" onclick="changeLanguage('ur')">اردو</button>
-                    <button class="lang-btn" data-lang="roman" onclick="changeLanguage('roman')">Roman</button>
-                    <button class="lang-btn" data-lang="hi" onclick="changeLanguage('hi')">हिन्दी</button>
+                    <button class="lang-btn active" data-lang="ur">اردو</button>
+                    <button class="lang-btn" data-lang="roman">Roman</button>
+                    <button class="lang-btn" data-lang="hi">हिन्दी</button>
                 </div>
             </div>
         </header>
@@ -1148,22 +1437,31 @@
                     <h2 id="greetingText">🌅 صبح بخیر</h2>
                     <p id="timeMessage">نئی صبح، نئی امید</p>
                     <div id="timeIndicator"></div>
-                    <div class="time-schedule-badge" id="timeScheduleBadge">🕐 موجودہ وقت: صبح 6:00 - گڈ مارننگ</div>
+                    <div class="time-schedule-badge" id="timeScheduleBadge">🕐 موجودہ وقت</div>
                 </div>
                 
                 <!-- Poetry Display -->
                 <div class="poetry-display">
                     <div class="poetry-container">
+                        <div class="poetry-type-badge" id="poetryTypeBadge">🎵 غزل</div>
                         <div id="poetryLines">
                             <p class="poetry-line urdu-text" id="line1">تجھ سے الفاظ کی نسبت ہے مری</p>
                             <p class="poetry-line urdu-text" id="line2">تُو جو چاہے تو میں شاعر ہوں</p>
                             <p class="poetry-line urdu-text" id="line3">میں جو چاہوں تو تو شاعری ہے</p>
+                            <p class="poetry-line urdu-text" id="line4" style="display:none;">ہر لفظ میں تو بسا ہے</p>
                         </div>
+                    </div>
+                    
+                    <!-- Keyword Display -->
+                    <div class="keyword-display" id="keywordDisplay">
+                        <span class="keyword-item">#شاعری</span>
+                        <span class="keyword-item">#محبت</span>
+                        <span class="keyword-item">#دل</span>
                     </div>
                     
                     <div class="poetry-info">
                         <span id="poetryCategory">❤️ Love Poetry</span>
-                        <span id="poetryCounter">1 / 16</span>
+                        <span id="poetryCounter">1 / 20</span>
                     </div>
                     
                     <div class="poetry-controls">
@@ -1187,22 +1485,27 @@
             </div>
         </section>
         
+        <!-- ===== FAVORITES SECTION ===== -->
+        <div class="favorites-section" id="favoritesSection">
+            <h3>❤️ پسندیدہ شاعری</h3>
+            <div class="favorites-grid" id="favoritesGrid">
+                <div class="no-favorites">کوئی پسندیدہ شاعری نہیں</div>
+            </div>
+        </div>
+        
+        <!-- ===== BACKUP SECTION ===== -->
+        <div class="backup-section">
+            <h3>💾 بیک اپ اور بحالی</h3>
+            <div class="backup-buttons">
+                <button class="backup-btn export" onclick="exportBackup()">📤 ایکسپورٹ ڈیٹا</button>
+                <button class="backup-btn import" onclick="document.getElementById('importFileInput').click()">📥 امپورٹ ڈیٹا</button>
+                <input type="file" id="importFileInput" accept=".json" onchange="importBackup(event)">
+            </div>
+        </div>
+        
         <!-- ===== IMAGE TEMPLATES SECTION ===== -->
         <div class="template-section">
-            <h3 class="lang-urdu">🖼️ شاعری کے لیے امیج ٹیمپلیٹس</h3>
-            <h3 class="lang-roman" style="display:none;">🖼️ Image Templates for Poetry</h3>
-            <h3 class="lang-hindi" style="display:none;">🖼️ कविता के लिए इमेज टेम्पलेट्स</h3>
-            
-            <p style="text-align:center;opacity:0.6;font-size:0.9rem;margin-bottom:1rem;font-family:var(--font-roman);" class="lang-urdu">
-                اپنے گروپ کے نام کے ساتھ ایڈٹ کریں اور ڈاؤن لوڈ کریں
-            </p>
-            <p style="text-align:center;opacity:0.6;font-size:0.9rem;margin-bottom:1rem;font-family:var(--font-roman);display:none;" class="lang-roman">
-                Edit with your group name and download
-            </p>
-            <p style="text-align:center;opacity:0.6;font-size:0.9rem;margin-bottom:1rem;font-family:var(--font-roman);display:none;" class="lang-hindi">
-                अपने ग्रुप के नाम के साथ एडिट करें और डाउनलोड करें
-            </p>
-            
+            <h3>🖼️ امیج ٹیمپلیٹس</h3>
             <div class="template-grid" id="templateGrid">
                 <!-- Templates will be rendered by JavaScript -->
             </div>
@@ -1210,20 +1513,7 @@
         
         <!-- ===== ACTIVE POSTS SECTION ===== -->
         <div class="active-posts-section">
-            <h3 class="lang-urdu">📌 ایکٹو پوسٹس (وقت کے حساب سے)</h3>
-            <h3 class="lang-roman" style="display:none;">📌 Active Posts (Time-Based)</h3>
-            <h3 class="lang-hindi" style="display:none;">📌 एक्टिव पोस्ट्स (समय के अनुसार)</h3>
-            
-            <p style="text-align:center;opacity:0.6;font-size:0.9rem;margin-bottom:1rem;font-family:var(--font-roman);" class="lang-urdu">
-                یہ پوسٹس مخصوص اوقات میں خودکار طور پر ایکٹو ہوتی ہیں
-            </p>
-            <p style="text-align:center;opacity:0.6;font-size:0.9rem;margin-bottom:1rem;font-family:var(--font-roman);display:none;" class="lang-roman">
-                These posts automatically activate at specific times
-            </p>
-            <p style="text-align:center;opacity:0.6;font-size:0.9rem;margin-bottom:1rem;font-family:var(--font-roman);display:none;" class="lang-hindi">
-                ये पोस्ट्स निर्धारित समय पर स्वचालित रूप से एक्टिव होती हैं
-            </p>
-            
+            <h3>📌 ایکٹو پوسٹس</h3>
             <div class="active-posts-grid" id="activePostsGrid">
                 <!-- Active posts will be rendered by JavaScript -->
             </div>
@@ -1231,10 +1521,7 @@
         
         <!-- ===== CONTROL PANEL ===== -->
         <div class="control-panel">
-            <h3 class="lang-urdu">🔍 شاعری تلاش کریں / نئی شاعری شامل کریں</h3>
-            <h3 class="lang-roman" style="display:none;">🔍 Search Poetry / Add New Poetry</h3>
-            <h3 class="lang-hindi" style="display:none;">🔍 कविता खोजें / नई कविता जोड़ें</h3>
-            
+            <h3 id="controlTitle">🔍 شاعری تلاش کریں / نئی شاعری شامل کریں</h3>
             <input type="text" id="searchInput" placeholder="🔎 شاعری سرچ کریں...">
             <div class="search-stats" id="searchStats">📚 کل پوسٹس: 0</div>
             <textarea id="newPoemInput" placeholder="📝 یہاں نئی شاعری لکھیں..."></textarea>
@@ -1246,43 +1533,35 @@
         
         <!-- ===== CATEGORIES ===== -->
         <section id="categories" class="section">
-            <h2 class="section-title lang-urdu">📂 Poetry Categories</h2>
-            <h2 class="section-title lang-roman" style="display:none;">📂 Poetry Categories</h2>
-            <h2 class="section-title lang-hindi" style="display:none;">📂 कविता श्रेणियाँ</h2>
-            
+            <h2 class="section-title" id="categoriesTitle">📂 Poetry Categories</h2>
             <div class="category-grid">
-                <div class="category-card active" data-category="all"><span>📚</span><h3 class="lang-urdu">All</h3><h3 class="lang-roman" style="display:none;">All</h3><h3 class="lang-hindi" style="display:none;">सभी</h3></div>
-                <div class="category-card" data-category="islamic"><span>🕌</span><h3 class="lang-urdu">Islamic</h3><h3 class="lang-roman" style="display:none;">Islamic</h3><h3 class="lang-hindi" style="display:none;">इस्लामिक</h3></div>
-                <div class="category-card" data-category="morning"><span>🌅</span><h3 class="lang-urdu">Morning</h3><h3 class="lang-roman" style="display:none;">Morning</h3><h3 class="lang-hindi" style="display:none;">सुबह</h3></div>
-                <div class="category-card" data-category="love"><span>❤️</span><h3 class="lang-urdu">Love</h3><h3 class="lang-roman" style="display:none;">Love</h3><h3 class="lang-hindi" style="display:none;">प्यार</h3></div>
-                <div class="category-card" data-category="sad"><span>💔</span><h3 class="lang-urdu">Sad</h3><h3 class="lang-roman" style="display:none;">Sad</h3><h3 class="lang-hindi" style="display:none;">उदास</h3></div>
-                <div class="category-card" data-category="friendship"><span>🤝</span><h3 class="lang-urdu">Friendship</h3><h3 class="lang-roman" style="display:none;">Friendship</h3><h3 class="lang-hindi" style="display:none;">दोस्ती</h3></div>
-                <div class="category-card" data-category="ghazal"><span>🎵</span><h3 class="lang-urdu">Ghazals</h3><h3 class="lang-roman" style="display:none;">Ghazals</h3><h3 class="lang-hindi" style="display:none;">ग़ज़ल</h3></div>
-                <div class="category-card" data-category="night"><span>🌙</span><h3 class="lang-urdu">Night</h3><h3 class="lang-roman" style="display:none;">Night</h3><h3 class="lang-hindi" style="display:none;">रात</h3></div>
+                <div class="category-card active" data-category="all"><span>📚</span><h3 id="catAll">All</h3></div>
+                <div class="category-card" data-category="islamic"><span>🕌</span><h3 id="catIslamic">Islamic</h3></div>
+                <div class="category-card" data-category="morning"><span>🌅</span><h3 id="catMorning">Morning</h3></div>
+                <div class="category-card" data-category="love"><span>❤️</span><h3 id="catLove">Love</h3></div>
+                <div class="category-card" data-category="sad"><span>💔</span><h3 id="catSad">Sad</h3></div>
+                <div class="category-card" data-category="friendship"><span>🤝</span><h3 id="catFriendship">Friendship</h3></div>
+                <div class="category-card" data-category="ghazal"><span>🎵</span><h3 id="catGhazal">Ghazals</h3></div>
+                <div class="category-card" data-category="night"><span>🌙</span><h3 id="catNight">Night</h3></div>
             </div>
         </section>
         
         <!-- ===== TOOLS ===== -->
         <section id="tools" class="section">
-            <h2 class="section-title lang-urdu">🛠 Poetry Tools</h2>
-            <h2 class="section-title lang-roman" style="display:none;">🛠 Poetry Tools</h2>
-            <h2 class="section-title lang-hindi" style="display:none;">🛠 कविता टूल्स</h2>
-            
+            <h2 class="section-title" id="toolsTitle">🛠 Poetry Tools</h2>
             <div class="tools-grid">
-                <div class="tool-card"><span>🔍</span><h3 class="lang-urdu">Search</h3><h3 class="lang-roman" style="display:none;">Search</h3><h3 class="lang-hindi" style="display:none;">खोज</h3><p class="lang-urdu">Find poetry instantly</p><p class="lang-roman" style="display:none;">Find poetry instantly</p><p class="lang-hindi" style="display:none;">तुरंत कविता खोजें</p></div>
-                <div class="tool-card"><span>🖼️</span><h3 class="lang-urdu">Frame Maker</h3><h3 class="lang-roman" style="display:none;">Frame Maker</h3><h3 class="lang-hindi" style="display:none;">फ्रेम मेकर</h3><p class="lang-urdu">Add elegant frames</p><p class="lang-roman" style="display:none;">Add elegant frames</p><p class="lang-hindi" style="display:none;">शानदार फ्रेम जोड़ें</p></div>
-                <div class="tool-card"><span>📱</span><h3 class="lang-urdu">Post Maker</h3><h3 class="lang-roman" style="display:none;">Post Maker</h3><h3 class="lang-hindi" style="display:none;">पोस्ट मेकर</h3><p class="lang-urdu">Create social posts</p><p class="lang-roman" style="display:none;">Create social posts</p><p class="lang-hindi" style="display:none;">सोशल पोस्ट बनाएं</p></div>
-                <div class="tool-card"><span>🎨</span><h3 class="lang-urdu">Text Styler</h3><h3 class="lang-roman" style="display:none;">Text Styler</h3><h3 class="lang-hindi" style="display:none;">टेक्स्ट स्टाइलर</h3><p class="lang-urdu">Stylish fonts &amp; effects</p><p class="lang-roman" style="display:none;">Stylish fonts &amp; effects</p><p class="lang-hindi" style="display:none;">स्टाइलिश फॉन्ट और इफेक्ट्स</p></div>
-                <div class="tool-card"><span>📊</span><h3 class="lang-urdu">Banner Maker</h3><h3 class="lang-roman" style="display:none;">Banner Maker</h3><h3 class="lang-hindi" style="display:none;">बैनर मेकर</h3><p class="lang-urdu">Custom banners</p><p class="lang-roman" style="display:none;">Custom banners</p><p class="lang-hindi" style="display:none;">कस्टम बैनर</p></div>
-                <div class="tool-card"><span>📚</span><h3 class="lang-urdu">Library</h3><h3 class="lang-roman" style="display:none;">Library</h3><h3 class="lang-hindi" style="display:none;">लाइब्रेरी</h3><p class="lang-urdu">Full collection</p><p class="lang-roman" style="display:none;">Full collection</p><p class="lang-hindi" style="display:none;">पूरा संग्रह</p></div>
+                <div class="tool-card"><span>🔍</span><h3 id="toolSearch">Search</h3><p id="toolSearchDesc">Find poetry instantly</p></div>
+                <div class="tool-card"><span>🖼️</span><h3 id="toolFrame">Frame Maker</h3><p id="toolFrameDesc">Add elegant frames</p></div>
+                <div class="tool-card"><span>📱</span><h3 id="toolPost">Post Maker</h3><p id="toolPostDesc">Create social posts</p></div>
+                <div class="tool-card"><span>🎨</span><h3 id="toolStyler">Text Styler</h3><p id="toolStylerDesc">Stylish fonts &amp; effects</p></div>
+                <div class="tool-card"><span>📊</span><h3 id="toolBanner">Banner Maker</h3><p id="toolBannerDesc">Custom banners</p></div>
+                <div class="tool-card"><span>📚</span><h3 id="toolLibrary">Library</h3><p id="toolLibraryDesc">Full collection</p></div>
             </div>
         </section>
         
         <!-- ===== FOOTER ===== -->
         <footer>
-            <p class="lang-urdu">✨ Poetry Time Hub - شاعری کا وقت ✨</p>
-            <p class="lang-roman" style="display:none;">✨ Poetry Time Hub - Poetry Time ✨</p>
-            <p class="lang-hindi" style="display:none;">✨ Poetry Time Hub - कविता का समय ✨</p>
+            <p id="footerText">✨ Poetry Time Hub - شاعری کا وقت ✨</p>
             <p class="footer-time" id="currentTime"></p>
         </footer>
     </div>
@@ -1292,187 +1571,248 @@
     <!-- ========================================================= -->
     <script>
         // ============================================================
-        // 1. LANGUAGE TRANSLATIONS
+        // 1. SERVICE WORKER REGISTRATION (PWA)
+        // ============================================================
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('✅ Service Worker registered'))
+                .catch(() => console.log('❌ Service Worker registration failed'));
+        }
+        
+        // ============================================================
+        // 2. INSTALL BANNER (PWA)
+        // ============================================================
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBanner').classList.add('show');
+        });
+        
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const result = await deferredPrompt.userChoice;
+                if (result.outcome === 'accepted') {
+                    document.getElementById('installBanner').classList.remove('show');
+                    showNotification('✅ App installed successfully!');
+                }
+                deferredPrompt = null;
+            }
+        });
+        
+        window.addEventListener('appinstalled', () => {
+            document.getElementById('installBanner').classList.remove('show');
+        });
+        
+        // ============================================================
+        // 3. TRANSLATIONS
         // ============================================================
         const TRANSLATIONS = {
             ur: {
-                // UI Elements
-                'searchPlaceholder': '🔎 شاعری سرچ کریں...',
-                'addPoemPlaceholder': '📝 یہاں نئی شاعری لکھیں...',
-                'addPoemBtn': '✨ شاعری شامل کریں',
-                'searchStats': '📚 کل پوسٹس: {count}',
-                'noPosts': '📭 کوئی شاعری نہیں ملی',
-                'deleteBtn': '🗑️ حذف کریں',
-                'copyBtn': '📋 Copy',
-                'shareBtn': '📤 Share',
-                'saveBtn': '❤️ Save',
-                'prevBtn': '⏮',
-                'playBtn': '⏸',
-                'nextBtn': '⏭',
-                // Categories
-                'all': 'All',
-                'islamic': 'Islamic',
-                'morning': 'Morning',
-                'love': 'Love',
-                'sad': 'Sad',
-                'friendship': 'Friendship',
-                'ghazal': 'Ghazals',
-                'night': 'Night',
-                // Section Titles
-                'categoriesTitle': '📂 Poetry Categories',
-                'toolsTitle': '🛠 Poetry Tools',
-                'templatesTitle': '🖼️ شاعری کے لیے امیج ٹیمپلیٹس',
-                'templatesDesc': 'اپنے گروپ کے نام کے ساتھ ایڈٹ کریں اور ڈاؤن لوڈ کریں',
-                'activeTitle': '📌 ایکٹو پوسٹس (وقت کے حساب سے)',
-                'activeDesc': 'یہ پوسٹس مخصوص اوقات میں خودکار طور پر ایکٹو ہوتی ہیں',
-                'controlTitle': '🔍 شاعری تلاش کریں / نئی شاعری شامل کریں',
-                'editTemplate': '✏️ ایڈٹ',
-                'downloadTemplate': '⬇️ ڈاؤن لوڈ',
-                'footerText': '✨ Poetry Time Hub - شاعری کا وقت ✨',
-                // Time Slots
-                'timeSlots': {
-                    'islamic': '🕌 اسلامی اذکار',
-                    'morning': '🌅 گڈ مارننگ',
-                    'love': '❤️ محبت اور دوستی',
-                    'general': '📜 عمومی شاعری',
-                    'evening': '💔 شام کی اداسی',
-                    'night': '🌙 شب بخیر'
+                searchPlaceholder: '🔎 شاعری سرچ کریں...',
+                addPoemPlaceholder: '📝 یہاں نئی شاعری لکھیں...',
+                addPoemBtn: '✨ شاعری شامل کریں',
+                searchStats: '📚 کل پوسٹس: {count}',
+                noPosts: '📭 کوئی شاعری نہیں ملی',
+                deleteBtn: '🗑️ حذف کریں',
+                copyBtn: '📋 Copy',
+                shareBtn: '📤 Share',
+                saveBtn: '❤️ Save',
+                prevBtn: '⏮',
+                playBtn: '⏸',
+                nextBtn: '⏭',
+                all: 'All',
+                islamic: 'Islamic',
+                morning: 'Morning',
+                love: 'Love',
+                sad: 'Sad',
+                friendship: 'Friendship',
+                ghazal: 'Ghazals',
+                night: 'Night',
+                categoriesTitle: '📂 Poetry Categories',
+                toolsTitle: '🛠 Poetry Tools',
+                templatesTitle: '🖼️ امیج ٹیمپلیٹس',
+                templatesDesc: 'اپنے گروپ کے نام کے ساتھ ایڈٹ کریں اور ڈاؤن لوڈ کریں',
+                activeTitle: '📌 ایکٹو پوسٹس',
+                activeDesc: 'یہ پوسٹس مخصوص اوقات میں خودکار طور پر ایکٹو ہوتی ہیں',
+                controlTitle: '🔍 شاعری تلاش کریں / نئی شاعری شامل کریں',
+                favoritesTitle: '❤️ پسندیدہ شاعری',
+                noFavorites: 'کوئی پسندیدہ شاعری نہیں',
+                removeFav: '🗑️ ہٹائیں',
+                exportData: '📤 ایکسپورٹ ڈیٹا',
+                importData: '📥 امپورٹ ڈیٹا',
+                backupTitle: '💾 بیک اپ اور بحالی',
+                footerText: '✨ Poetry Time Hub - شاعری کا وقت ✨',
+                editTemplate: '✏️ ایڈٹ',
+                downloadTemplate: '⬇️ ڈاؤن لوڈ',
+                whatsappTemplate: '📱 واٹس ایپ',
+                active: '✅ ایکٹو',
+                inactive: '⏳ غیر ایکٹو',
+                appTitle: 'Poetry Time Hub',
+                timeSlots: {
+                    islamic: '🕌 اسلامی اذکار',
+                    morning: '🌅 گڈ مارننگ',
+                    love: '❤️ محبت اور دوستی',
+                    general: '📜 عمومی شاعری',
+                    evening: '💔 شام کی اداسی',
+                    night: '🌙 شب بخیر'
                 },
-                'greetings': {
-                    'islamic': '🕌 السلام علیکم',
-                    'morning': '🌅 صبح بخیر',
-                    'love': '❤️ شب بخیر',
-                    'general': '📜 شب بخیر',
-                    'evening': '🌅 شام بخیر',
-                    'night': '🌙 شب بخیر'
+                greetings: {
+                    islamic: '🕌 السلام علیکم',
+                    morning: '🌅 صبح بخیر',
+                    love: '❤️ شب بخیر',
+                    general: '📜 شب بخیر',
+                    evening: '🌅 شام بخیر',
+                    night: '🌙 شب بخیر'
                 },
-                'messages': {
-                    'islamic': 'اللہ کی رحمت ہو آپ پر',
-                    'morning': 'نئی صبح، نئی امید',
-                    'love': 'محبت کا دن شروع ہوا',
-                    'general': 'دن کی روشنی، شاعری کی روشنی',
-                    'evening': 'غروب کی خوبصورتی',
-                    'night': 'رات کی تنہائی، شاعری کی گہرائی'
+                messages: {
+                    islamic: 'اللہ کی رحمت ہو آپ پر',
+                    morning: 'نئی صبح، نئی امید',
+                    love: 'محبت کا دن شروع ہوا',
+                    general: 'دن کی روشنی، شاعری کی روشنی',
+                    evening: 'غروب کی خوبصورتی',
+                    night: 'رات کی تنہائی، شاعری کی گہرائی'
                 }
             },
             roman: {
-                'searchPlaceholder': '🔎 Search Poetry...',
-                'addPoemPlaceholder': '📝 Write new poetry here...',
-                'addPoemBtn': '✨ Add Poetry',
-                'searchStats': '📚 Total Posts: {count}',
-                'noPosts': '📭 No poetry found',
-                'deleteBtn': '🗑️ Delete',
-                'copyBtn': '📋 Copy',
-                'shareBtn': '📤 Share',
-                'saveBtn': '❤️ Save',
-                'prevBtn': '⏮',
-                'playBtn': '⏸',
-                'nextBtn': '⏭',
-                'all': 'All',
-                'islamic': 'Islamic',
-                'morning': 'Morning',
-                'love': 'Love',
-                'sad': 'Sad',
-                'friendship': 'Friendship',
-                'ghazal': 'Ghazals',
-                'night': 'Night',
-                'categoriesTitle': '📂 Poetry Categories',
-                'toolsTitle': '🛠 Poetry Tools',
-                'templatesTitle': '🖼️ Image Templates for Poetry',
-                'templatesDesc': 'Edit with your group name and download',
-                'activeTitle': '📌 Active Posts (Time-Based)',
-                'activeDesc': 'These posts automatically activate at specific times',
-                'controlTitle': '🔍 Search Poetry / Add New Poetry',
-                'editTemplate': '✏️ Edit',
-                'downloadTemplate': '⬇️ Download',
-                'footerText': '✨ Poetry Time Hub - Poetry Time ✨',
-                'timeSlots': {
-                    'islamic': '🕌 Islamic Remembrance',
-                    'morning': '🌅 Good Morning',
-                    'love': '❤️ Love & Friendship',
-                    'general': '📜 General Poetry',
-                    'evening': '💔 Evening Sadness',
-                    'night': '🌙 Good Night'
+                searchPlaceholder: '🔎 Search Poetry...',
+                addPoemPlaceholder: '📝 Write new poetry here...',
+                addPoemBtn: '✨ Add Poetry',
+                searchStats: '📚 Total Posts: {count}',
+                noPosts: '📭 No poetry found',
+                deleteBtn: '🗑️ Delete',
+                copyBtn: '📋 Copy',
+                shareBtn: '📤 Share',
+                saveBtn: '❤️ Save',
+                prevBtn: '⏮',
+                playBtn: '⏸',
+                nextBtn: '⏭',
+                all: 'All',
+                islamic: 'Islamic',
+                morning: 'Morning',
+                love: 'Love',
+                sad: 'Sad',
+                friendship: 'Friendship',
+                ghazal: 'Ghazals',
+                night: 'Night',
+                categoriesTitle: '📂 Poetry Categories',
+                toolsTitle: '🛠 Poetry Tools',
+                templatesTitle: '🖼️ Image Templates',
+                templatesDesc: 'Edit with your group name and download',
+                activeTitle: '📌 Active Posts',
+                activeDesc: 'These posts automatically activate at specific times',
+                controlTitle: '🔍 Search Poetry / Add New Poetry',
+                favoritesTitle: '❤️ Favorite Poetry',
+                noFavorites: 'No favorites yet',
+                removeFav: '🗑️ Remove',
+                exportData: '📤 Export Data',
+                importData: '📥 Import Data',
+                backupTitle: '💾 Backup & Restore',
+                footerText: '✨ Poetry Time Hub - Poetry Time ✨',
+                editTemplate: '✏️ Edit',
+                downloadTemplate: '⬇️ Download',
+                whatsappTemplate: '📱 WhatsApp',
+                active: '✅ Active',
+                inactive: '⏳ Inactive',
+                appTitle: 'Poetry Time Hub',
+                timeSlots: {
+                    islamic: '🕌 Islamic Remembrance',
+                    morning: '🌅 Good Morning',
+                    love: '❤️ Love & Friendship',
+                    general: '📜 General Poetry',
+                    evening: '💔 Evening Sadness',
+                    night: '🌙 Good Night'
                 },
-                'greetings': {
-                    'islamic': '🕌 Assalamu Alaikum',
-                    'morning': '🌅 Good Morning',
-                    'love': '❤️ Good Day',
-                    'general': '📜 Good Day',
-                    'evening': '🌅 Good Evening',
-                    'night': '🌙 Good Night'
+                greetings: {
+                    islamic: '🕌 Assalamu Alaikum',
+                    morning: '🌅 Good Morning',
+                    love: '❤️ Good Day',
+                    general: '📜 Good Day',
+                    evening: '🌅 Good Evening',
+                    night: '🌙 Good Night'
                 },
-                'messages': {
-                    'islamic': 'May Allah\'s blessings be upon you',
-                    'morning': 'New morning, new hope',
-                    'love': 'The day of love has begun',
-                    'general': 'Daylight, poetry light',
-                    'evening': 'Beauty of sunset',
-                    'night': 'Silence of night, depth of poetry'
+                messages: {
+                    islamic: 'May Allah\'s blessings be upon you',
+                    morning: 'New morning, new hope',
+                    love: 'The day of love has begun',
+                    general: 'Daylight, poetry light',
+                    evening: 'Beauty of sunset',
+                    night: 'Silence of night, depth of poetry'
                 }
             },
             hi: {
-                'searchPlaceholder': '🔎 कविता खोजें...',
-                'addPoemPlaceholder': '📝 यहाँ नई कविता लिखें...',
-                'addPoemBtn': '✨ कविता जोड़ें',
-                'searchStats': '📚 कुल पोस्ट्स: {count}',
-                'noPosts': '📭 कोई कविता नहीं मिली',
-                'deleteBtn': '🗑️ हटाएं',
-                'copyBtn': '📋 कॉपी',
-                'shareBtn': '📤 शेयर',
-                'saveBtn': '❤️ सेव',
-                'prevBtn': '⏮',
-                'playBtn': '⏸',
-                'nextBtn': '⏭',
-                'all': 'सभी',
-                'islamic': 'इस्लामिक',
-                'morning': 'सुबह',
-                'love': 'प्यार',
-                'sad': 'उदास',
-                'friendship': 'दोस्ती',
-                'ghazal': 'ग़ज़ल',
-                'night': 'रात',
-                'categoriesTitle': '📂 कविता श्रेणियाँ',
-                'toolsTitle': '🛠 कविता टूल्स',
-                'templatesTitle': '🖼️ कविता के लिए इमेज टेम्पलेट्स',
-                'templatesDesc': 'अपने ग्रुप के नाम के साथ एडिट करें और डाउनलोड करें',
-                'activeTitle': '📌 एक्टिव पोस्ट्स (समय के अनुसार)',
-                'activeDesc': 'ये पोस्ट्स निर्धारित समय पर स्वचालित रूप से एक्टिव होती हैं',
-                'controlTitle': '🔍 कविता खोजें / नई कविता जोड़ें',
-                'editTemplate': '✏️ एडिट',
-                'downloadTemplate': '⬇️ डाउनलोड',
-                'footerText': '✨ Poetry Time Hub - कविता का समय ✨',
-                'timeSlots': {
-                    'islamic': '🕌 इस्लामी अज़कार',
-                    'morning': '🌅 गुड मॉर्निंग',
-                    'love': '❤️ प्यार और दोस्ती',
-                    'general': '📜 सामान्य कविता',
-                    'evening': '💔 शाम की उदासी',
-                    'night': '🌙 गुड नाइट'
+                searchPlaceholder: '🔎 कविता खोजें...',
+                addPoemPlaceholder: '📝 यहाँ नई कविता लिखें...',
+                addPoemBtn: '✨ कविता जोड़ें',
+                searchStats: '📚 कुल पोस्ट्स: {count}',
+                noPosts: '📭 कोई कविता नहीं मिली',
+                deleteBtn: '🗑️ हटाएं',
+                copyBtn: '📋 कॉपी',
+                shareBtn: '📤 शेयर',
+                saveBtn: '❤️ सेव',
+                prevBtn: '⏮',
+                playBtn: '⏸',
+                nextBtn: '⏭',
+                all: 'सभी',
+                islamic: 'इस्लामिक',
+                morning: 'सुबह',
+                love: 'प्यार',
+                sad: 'उदास',
+                friendship: 'दोस्ती',
+                ghazal: 'ग़ज़ल',
+                night: 'रात',
+                categoriesTitle: '📂 कविता श्रेणियाँ',
+                toolsTitle: '🛠 कविता टूल्स',
+                templatesTitle: '🖼️ इमेज टेम्पलेट्स',
+                templatesDesc: 'अपने ग्रुप के नाम के साथ एडिट करें और डाउनलोड करें',
+                activeTitle: '📌 एक्टिव पोस्ट्स',
+                activeDesc: 'ये पोस्ट्स निर्धारित समय पर स्वचालित रूप से एक्टिव होती हैं',
+                controlTitle: '🔍 कविता खोजें / नई कविता जोड़ें',
+                favoritesTitle: '❤️ पसंदीदा कविता',
+                noFavorites: 'कोई पसंदीदा कविता नहीं',
+                removeFav: '🗑️ हटाएं',
+                exportData: '📤 एक्सपोर्ट डेटा',
+                importData: '📥 इम्पोर्ट डेटा',
+                backupTitle: '💾 बैकअप और रिस्टोर',
+                footerText: '✨ Poetry Time Hub - कविता का समय ✨',
+                editTemplate: '✏️ एडिट',
+                downloadTemplate: '⬇️ डाउनलोड',
+                whatsappTemplate: '📱 व्हाट्सएप',
+                active: '✅ एक्टिव',
+                inactive: '⏳ निष्क्रिय',
+                appTitle: 'Poetry Time Hub',
+                timeSlots: {
+                    islamic: '🕌 इस्लामी अज़कार',
+                    morning: '🌅 गुड मॉर्निंग',
+                    love: '❤️ प्यार और दोस्ती',
+                    general: '📜 सामान्य कविता',
+                    evening: '💔 शाम की उदासी',
+                    night: '🌙 गुड नाइट'
                 },
-                'greetings': {
-                    'islamic': '🕌 अस्सलामु अलैकुम',
-                    'morning': '🌅 गुड मॉर्निंग',
-                    'love': '❤️ गुड डे',
-                    'general': '📜 गुड डे',
-                    'evening': '🌅 गुड इवनिंग',
-                    'night': '🌙 गुड नाइट'
+                greetings: {
+                    islamic: '🕌 अस्सलामु अलैकुम',
+                    morning: '🌅 गुड मॉर्निंग',
+                    love: '❤️ गुड डे',
+                    general: '📜 गुड डे',
+                    evening: '🌅 गुड इवनिंग',
+                    night: '🌙 गुड नाइट'
                 },
-                'messages': {
-                    'islamic': 'अल्लाह की रहमत हो आप पर',
-                    'morning': 'नई सुबह, नई उम्मीद',
-                    'love': 'प्यार का दिन शुरू हुआ',
-                    'general': 'दिन की रोशनी, कविता की रोशनी',
-                    'evening': 'सूर्यास्त की सुंदरता',
-                    'night': 'रात की खामोशी, कविता की गहराई'
+                messages: {
+                    islamic: 'अल्लाह की रहमत हो आप पर',
+                    morning: 'नई सुबह, नई उम्मीद',
+                    love: 'प्यार का दिन शुरू हुआ',
+                    general: 'दिन की रोशनी, कविता की रोशनी',
+                    evening: 'सूर्यास्त की सुंदरता',
+                    night: 'रात की खामोशी, कविता की गहराई'
                 }
             }
         };
-
+        
         let currentLanguage = 'ur';
-
+        
         // ============================================================
-        // 2. TIME SCHEDULE CONFIGURATION
+        // 4. TIME SCHEDULE
         // ============================================================
         const TIME_SCHEDULE = {
             islamic: { start: 5, end: 6, label: 'islamic' },
@@ -1483,7 +1823,7 @@
             night: { start: 19, end: 24, label: 'night' }
         };
         TIME_SCHEDULE.night_midnight = { start: 0, end: 5, label: 'night' };
-
+        
         function getCurrentTimeSlot() {
             const hour = new Date().getHours();
             if (hour >= 5 && hour < 6) return 'islamic';
@@ -1494,157 +1834,189 @@
             if (hour >= 19 && hour < 24) return 'night';
             return 'night_midnight';
         }
-
-        function getTimeSlotLabel(slot) {
-            const t = TRANSLATIONS[currentLanguage];
-            return t.timeSlots[slot] || slot;
-        }
-
+        
         function getTimeSlotEmoji(slot) {
-            const emojis = {
-                islamic: '🕌',
-                morning: '🌅',
-                love: '❤️',
-                general: '📜',
-                evening: '💔',
-                night: '🌙',
-                night_midnight: '🌙'
-            };
+            const emojis = { islamic: '🕌', morning: '🌅', love: '❤️', general: '📜', evening: '💔', night: '🌙',
+                night_midnight: '🌙' };
             return emojis[slot] || '📜';
         }
-
+        
         // ============================================================
-        // 3. POETRY DATABASE
+        // 5. POETRY DATABASE
         // ============================================================
-        const DEFAULT_POEMS = [
-            // Islamic (5AM - 6AM)
-            {
-                id: 1,
-                category: 'islamic',
-                timeSlot: 'islamic',
-                tags: ['Islamic', 'Dua'],
-                urdu: ['رب کی رحمت سے ہے دنیا کی بہار', 'ہر نماز میں ملتا ہے سکون و قرار', 'دل کو جب بھی کوئی غم ستائے', 'یادِ خدا ہی ہے بہترین سہارا'],
-                roman: ['Rab ki rehmat se hai duniya ki bahaar', 'Har namaz mein milta hai sukoon o qaraar', 'Dil ko jab bhi koi gham sataaye', 'Yaad-e-Khuda hi hai behtareen sahaara'],
-                hindi: ['रब की रहमत से है दुनिया की बहार', 'हर नमाज़ में मिलता है सुकून और करार', 'दिल को जब भी कोई ग़म सताए', 'याद-ए-ख़ुदा ही है बेहतरीन सहारा']
-            },
-            {
-                id: 2,
-                category: 'islamic',
-                timeSlot: 'islamic',
-                tags: ['Islamic', 'Dua'],
-                urdu: ['اللہ سے مانگو جو چاہو', 'وہ سنتا ہے ہر دعا کو', 'دل کو سکون مل جاتا ہے', 'جب یاد کرتے ہیں خدا کو'],
-                roman: ['Allah se maango jo chaaho', 'Woh sunta hai har dua ko', 'Dil ko sukoon mil jaata hai', 'Jab yaad karte hain Khuda ko'],
-                hindi: ['अल्लाह से माँगो जो चाहो', 'वो सुनता है हर दुआ को', 'दिल को सुकून मिल जाता है', 'जब याद करते हैं खुदा को']
-            },
-            {
-                id: 3,
-                category: 'islamic',
-                timeSlot: 'islamic',
-                tags: ['Islamic', 'Dua'],
-                urdu: ['درود پاک پڑھو ہر دم', 'دل کا سکون ہے اس میں', 'اللہ کی رحمت ہے اس میں', 'جنت کی راہ ہے اس میں'],
-                roman: ['Darood paak parho har dam', 'Dil ka sukoon hai is mein', 'Allah ki rehmat hai is mein', 'Jannat ki raah hai is mein'],
-                hindi: ['दरूद पाक पढ़ो हर दम', 'दिल का सुकून है इसमें', 'अल्लाह की रहमत है इसमें', 'जन्नत की राह है इसमें']
-            },
-            // Morning (6AM - 8AM)
-            {
-                id: 4,
-                category: 'morning',
-                timeSlot: 'morning',
-                tags: ['Morning', 'Good Morning'],
-                urdu: ['صبح بخیر میرے دوست', 'نئی امید لے کر آئی ہے', 'خدا کرے ہمیشہ خوش رہو', 'یہ دعا ہے میری'],
-                roman: ['Subah bakhair mere dost', 'Nayi umeed le kar aayi hai', 'Khuda kare hamesha khush raho', 'Ye dua hai meri'],
-                hindi: ['सुबह बख़ैर मेरे दोस्त', 'नई उम्मीद ले कर आई है', 'खुदा करे हमेशा खुश रहो', 'ये दुआ है मेरी']
-            },
-            {
-                id: 5,
-                category: 'morning',
-                timeSlot: 'morning',
-                tags: ['Morning', 'Good Morning'],
-                urdu: ['صبح کی پہلی کرن ہے یہ', 'امیدوں کا سفر ہے یہ', 'کل کی رات بھولیں', 'آج کی روشنی دیکھیں'],
-                roman: ['Subah ki pehli kiran hai ye', 'Umeedon ka safar hai ye', 'Kal ki raat bhoolain', 'Aaj ki roshni dekhein'],
-                hindi: ['सुबह की पहली किरण है ये', 'उम्मीदों का सफर है ये', 'कल की रात भूलें', 'आज की रोशनी देखें']
-            },
-            // Love (8AM - 12PM)
-            {
-                id: 6,
-                category: 'love',
-                timeSlot: 'love',
-                tags: ['Love', 'Romantic'],
-                urdu: ['تجھ سے الفاظ کی نسبت ہے مری', 'تُو جو چاہے تو میں شاعر ہوں', 'میں جو چاہوں تو تو شاعری ہے'],
-                roman: ['Tujh se alfaaz ki nisbat hai meri', 'Tu jo chahe to main shayar hoon', 'Main jo chahon to tu shayari hai'],
-                hindi: ['तुझ से अल्फ़ाज़ की निस्बत है मेरी', 'तू जो चाहे तो मैं शायर हूँ', 'मैं जो चाहूँ तो तू शायरी है']
-            },
-            {
-                id: 7,
-                category: 'love',
-                timeSlot: 'love',
-                tags: ['Love', 'Deep'],
-                urdu: ['محبت میں نہیں ہے فرق جینے اور مرنے کا', 'اسی کو دیکھ کر جیتے ہیں جس پہ مرنے کو جی چاہے'],
-                roman: ['Muhabbat mein nahi hai farq jeene aur marne ka', 'Usi ko dekh kar jeete hain jis pe marne ko ji chahe'],
-                hindi: ['मुहब्बत में नहीं है फ़र्क़ जीने और मरने का', 'उसी को देख कर जीते हैं जिस पे मरने को जी चाहे']
-            },
-            // Friendship (8AM - 12PM)
-            {
-                id: 8,
-                category: 'friendship',
-                timeSlot: 'love',
-                tags: ['Friendship'],
-                urdu: ['دوستی کا ہے یہ عالم', 'دل میں ہیں ہم اور دل میں ہے وہ', 'دوریاں چاہے کتنی بھی ہوں', 'دوستی کبھی نہیں ٹوٹتی'],
-                roman: ['Dosti ka hai ye aalam', 'Dil mein hain hum aur dil mein hai woh', 'Dooriyaan chahe kitni bhi hoon', 'Dosti kabhi nahi tooti'],
-                hindi: ['दोस्ती का है ये आलम', 'दिल में हैं हम और दिल में है वो', 'दूरियाँ चाहे कितनी भी हों', 'दोस्ती कभी नहीं टूटती']
-            },
-            // General (12PM - 5PM)
-            {
-                id: 9,
-                category: 'ghazal',
-                timeSlot: 'general',
-                tags: ['Ghazal', 'Classical'],
-                urdu: ['ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے', 'بہت نکلے میرے ارمان مگر پھر بھی کم نکلے'],
-                roman: ['Hazaaron khwahishein aisi ke har khwahish pe dam nikle', 'Bahut nikle mere armaan magar phir bhi kam nikle'],
-                hindi: ['हज़ारों ख़्वाहिशें ऐसी के हर ख़्वाहिश पे दम निकले', 'बहुत निकले मेरे अरमान मगर फिर भी कम निकले']
-            },
-            // Evening (5PM - 7PM)
-            {
-                id: 10,
-                category: 'sad',
-                timeSlot: 'evening',
-                tags: ['Sad', 'Emotional'],
-                urdu: ['دل تو بہت روئے گا', 'آنکھیں بھی بہت نم ہیں', 'مگر یہ رات بہت لمبی ہے', 'اور میں بہت تھکا ہوا ہوں'],
-                roman: ['Dil to bahut roye ga', 'Aankhen bhi bahut nam hain', 'Magar ye raat bahut lambi hai', 'Aur main bahut thaka hua hoon'],
-                hindi: ['दिल तो बहुत रोएगा', 'आँखें भी बहुत नम हैं', 'मगर ये रात बहुत लंबी है', 'और मैं बहुत थका हुआ हूँ']
-            },
-            // Night (7PM - 5AM)
-            {
-                id: 11,
-                category: 'night',
-                timeSlot: 'night',
-                tags: ['Night', 'Good Night'],
-                urdu: ['چاند کی چاندنی ہے یہ', 'ستاروں کی بات ہے یہ', 'رات کی خاموشی میں', 'دل کی آواز ہے یہ'],
-                roman: ['Chand ki chaandni hai ye', 'Sitaron ki baat hai ye', 'Raat ki khamoshi mein', 'Dil ki aawaz hai ye'],
-                hindi: ['चाँद की चाँदनी है ये', 'सितारों की बात है ये', 'रात की ख़ामोशी में', 'दिल की आवाज़ है ये']
-            },
-            {
-                id: 12,
-                category: 'night',
-                timeSlot: 'night',
-                tags: ['Night', 'Good Night'],
-                urdu: ['شب بخیر میرے ہم نشیں', 'رات کا سکون تمہیں ملے', 'خوابوں میں ملے گی خوشی', 'اللہ تمہیں محفوظ رکھے'],
-                roman: ['Shab bakhair mere hum nasheen', 'Raat ka sukoon tumhein mile', 'Khwabon mein mile gi khushi', 'Allah tumhein mehfooz rakhe'],
-                hindi: ['शब बख़ैर मेरे हम नशीं', 'रात का सुकून तुम्हें मिले', 'ख़्वाबों में मिलेगी ख़ुशी', 'अल्लाह तुम्हें महफूज़ रखे']
-            },
-            {
-                id: 13,
-                category: 'night',
-                timeSlot: 'night_midnight',
-                tags: ['Night', 'Good Night'],
-                urdu: ['رات گہری ہو چلی ہے', 'چاند بھی چھپ گیا ہے', 'تم بھی سو جاؤ', 'خوابوں کی دنیا میں'],
-                roman: ['Raat gehri ho chali hai', 'Chand bhi chhup gaya hai', 'Tum bhi so jao', 'Khwabon ki duniya mein'],
-                hindi: ['रात गहरी हो चली है', 'चाँद भी छुप गया है', 'तुम भी सो जाओ', 'ख़्वाबों की दुनिया में']
-            }
-        ];
-
+        const DEFAULT_POEMS = [{
+            id: 1,
+            category: 'islamic',
+            timeSlot: 'islamic',
+            type: 'ghazal',
+            tags: ['Islamic', 'Dua'],
+            urdu: ['رب کی رحمت سے ہے دنیا کی بہار', 'ہر نماز میں ملتا ہے سکون و قرار', 'دل کو جب بھی کوئی غم ستائے',
+                'یادِ خدا ہی ہے بہترین سہارا'
+            ],
+            roman: ['Rab ki rehmat se hai duniya ki bahaar', 'Har namaz mein milta hai sukoon o qaraar',
+                'Dil ko jab bhi koi gham sataaye', 'Yaad-e-Khuda hi hai behtareen sahaara'
+            ],
+            hindi: ['रब की रहमत से है दुनिया की बहार', 'हर नमाज़ में मिलता है सुकून और करार',
+                'दिल को जब भी कोई ग़म सताए', 'याद-ए-ख़ुदा ही है बेहतरीन सहारा'
+            ]
+        }, {
+            id: 2,
+            category: 'islamic',
+            timeSlot: 'islamic',
+            type: '2line',
+            tags: ['Islamic', 'Dua'],
+            urdu: ['اللہ سے مانگو جو چاہو', 'وہ سنتا ہے ہر دعا کو'],
+            roman: ['Allah se maango jo chaaho', 'Woh sunta hai har dua ko'],
+            hindi: ['अल्लाह से माँगो जो चाहो', 'वो सुनता है हर दुआ को']
+        }, {
+            id: 3,
+            category: 'morning',
+            timeSlot: 'morning',
+            type: '4line',
+            tags: ['Morning', 'Good Morning'],
+            urdu: ['صبح بخیر میرے دوست', 'نئی امید لے کر آئی ہے', 'خدا کرے ہمیشہ خوش رہو', 'یہ دعا ہے میری'],
+            roman: ['Subah bakhair mere dost', 'Nayi umeed le kar aayi hai', 'Khuda kare hamesha khush raho',
+                'Ye dua hai meri'
+            ],
+            hindi: ['सुबह बख़ैर मेरे दोस्त', 'नई उम्मीद ले कर आई है', 'खुदा करे हमेशा खुश रहो', 'ये दुआ है मेरी']
+        }, {
+            id: 4,
+            category: 'morning',
+            timeSlot: 'morning',
+            type: '2line',
+            tags: ['Morning', 'Good Morning'],
+            urdu: ['صبح کی پہلی کرن ہے یہ', 'امیدوں کا سفر ہے یہ'],
+            roman: ['Subah ki pehli kiran hai ye', 'Umeedon ka safar hai ye'],
+            hindi: ['सुबह की पहली किरण है ये', 'उम्मीदों का सफर है ये']
+        }, {
+            id: 5,
+            category: 'love',
+            timeSlot: 'love',
+            type: 'ghazal',
+            tags: ['Love', 'Romantic'],
+            urdu: ['تجھ سے الفاظ کی نسبت ہے مری', 'تُو جو چاہے تو میں شاعر ہوں', 'میں جو چاہوں تو تو شاعری ہے'],
+            roman: ['Tujh se alfaaz ki nisbat hai meri', 'Tu jo chahe to main shayar hoon',
+                'Main jo chahon to tu shayari hai'
+            ],
+            hindi: ['तुझ से अल्फ़ाज़ की निस्बत है मेरी', 'तू जो चाहे तो मैं शायर हूँ', 'मैं जो चाहूँ तो तू शायरी है']
+        }, {
+            id: 6,
+            category: 'love',
+            timeSlot: 'love',
+            type: '2line',
+            tags: ['Love', 'Deep'],
+            urdu: ['محبت میں نہیں ہے فرق جینے اور مرنے کا', 'اسی کو دیکھ کر جیتے ہیں جس پہ مرنے کو جی چاہے'],
+            roman: ['Muhabbat mein nahi hai farq jeene aur marne ka',
+                'Usi ko dekh kar jeete hain jis pe marne ko ji chahe'
+            ],
+            hindi: ['मुहब्बत में नहीं है फ़र्क़ जीने और मरने का',
+                'उसी को देख कर जीते हैं जिस पे मरने को जी चाहे'
+            ]
+        }, {
+            id: 7,
+            category: 'friendship',
+            timeSlot: 'love',
+            type: '4line',
+            tags: ['Friendship'],
+            urdu: ['دوستی کا ہے یہ عالم', 'دل میں ہیں ہم اور دل میں ہے وہ', 'دوریاں چاہے کتنی بھی ہوں',
+                'دوستی کبھی نہیں ٹوٹتی'
+            ],
+            roman: ['Dosti ka hai ye aalam', 'Dil mein hain hum aur dil mein hai woh',
+                'Dooriyaan chahe kitni bhi hoon', 'Dosti kabhi nahi tooti'
+            ],
+            hindi: ['दोस्ती का है ये आलम', 'दिल में हैं हम और दिल में है वो', 'दूरियाँ चाहे कितनी भी हों',
+                'दोस्ती कभी नहीं टूटती'
+            ]
+        }, {
+            id: 8,
+            category: 'ghazal',
+            timeSlot: 'general',
+            type: 'ghazal',
+            tags: ['Ghazal', 'Classical'],
+            urdu: ['ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے', 'بہت نکلے میرے ارمان مگر پھر بھی کم نکلے'],
+            roman: ['Hazaaron khwahishein aisi ke har khwahish pe dam nikle',
+                'Bahut nikle mere armaan magar phir bhi kam nikle'
+            ],
+            hindi: ['हज़ारों ख़्वाहिशें ऐसी के हर ख़्वाहिश पे दम निकले',
+                'बहुत निकले मेरे अरमान मगर फिर भी कम निकले'
+            ]
+        }, {
+            id: 9,
+            category: 'sad',
+            timeSlot: 'evening',
+            type: '4line',
+            tags: ['Sad', 'Emotional'],
+            urdu: ['دل تو بہت روئے گا', 'آنکھیں بھی بہت نم ہیں', 'مگر یہ رات بہت لمبی ہے', 'اور میں بہت تھکا ہوا ہوں'],
+            roman: ['Dil to bahut roye ga', 'Aankhen bhi bahut nam hain', 'Magar ye raat bahut lambi hai',
+                'Aur main bahut thaka hua hoon'
+            ],
+            hindi: ['दिल तो बहुत रोएगा', 'आँखें भी बहुत नम हैं', 'मगर ये रात बहुत लंबी है', 'और मैं बहुत थका हुआ हूँ']
+        }, {
+            id: 10,
+            category: 'sad',
+            timeSlot: 'evening',
+            type: '2line',
+            tags: ['Sad', 'Emotional'],
+            urdu: ['دل میں ہے درد بہت', 'آنکھوں میں ہے نم بہت'],
+            roman: ['Dil mein hai dard bahut', 'Aankhon mein hai nam bahut'],
+            hindi: ['दिल में है दर्द बहुत', 'आँखों में है नम बहुत']
+        }, {
+            id: 11,
+            category: 'night',
+            timeSlot: 'night',
+            type: 'ghazal',
+            tags: ['Night', 'Good Night'],
+            urdu: ['چاند کی چاندنی ہے یہ', 'ستاروں کی بات ہے یہ', 'رات کی خاموشی میں', 'دل کی آواز ہے یہ'],
+            roman: ['Chand ki chaandni hai ye', 'Sitaron ki baat hai ye', 'Raat ki khamoshi mein',
+                'Dil ki aawaz hai ye'
+            ],
+            hindi: ['चाँद की चाँदनी है ये', 'सितारों की बात है ये', 'रात की ख़ामोशी में', 'दिल की आवाज़ है ये']
+        }, {
+            id: 12,
+            category: 'night',
+            timeSlot: 'night',
+            type: '2line',
+            tags: ['Night', 'Good Night'],
+            urdu: ['شب بخیر میرے ہم نشیں', 'رات کا سکون تمہیں ملے'],
+            roman: ['Shab bakhair mere hum nasheen', 'Raat ka sukoon tumhein mile'],
+            hindi: ['शब बख़ैर मेरे हम नशीं', 'रात का सुकून तुम्हें मिले']
+        }, {
+            id: 13,
+            category: 'night',
+            timeSlot: 'night_midnight',
+            type: '4line',
+            tags: ['Night', 'Good Night'],
+            urdu: ['رات گہری ہو چلی ہے', 'چاند بھی چھپ گیا ہے', 'تم بھی سو جاؤ', 'خوابوں کی دنیا میں'],
+            roman: ['Raat gehri ho chali hai', 'Chand bhi chhup gaya hai', 'Tum bhi so jao',
+                'Khwabon ki duniya mein'
+            ],
+            hindi: ['रात गहरी हो चली है', 'चाँद भी छुप गया है', 'तुम भी सो जाओ', 'ख़्वाबों की दुनिया में']
+        }, {
+            id: 14,
+            category: 'love',
+            timeSlot: 'love',
+            type: 'nazm',
+            tags: ['Love', 'Nazm'],
+            urdu: ['محبت ایک جذبہ ہے', 'دلوں کی خواہش ہے', 'الفاظ کی معنی میں', 'خدا کی نشانی ہے'],
+            roman: ['Muhabbat ek jazba hai', 'Dilon ki khwahish hai', 'Alfaaz ki maani mein',
+                'Khuda ki nishani hai'
+            ],
+            hindi: ['मुहब्बत एक जज़्बा है', 'दिलों की ख्वाहिश है', 'अल्फाज़ की मानी में', 'खुदा की निशानी है']
+        }, {
+            id: 15,
+            category: 'islamic',
+            timeSlot: 'islamic',
+            type: 'nazm',
+            tags: ['Islamic', 'Nazm'],
+            urdu: ['اللہ کی محبت ہے', 'دلوں کی راحت ہے', 'ہر درد کی دوا ہے', 'ہر غم کی شفا ہے'],
+            roman: ['Allah ki muhabbat hai', 'Dilon ki raahat hai', 'Har dard ki dawa hai',
+                'Har gham ki shifa hai'
+            ],
+            hindi: ['अल्लाह की मुहब्बत है', 'दिलों की राहत है', 'हर दर्द की दवा है', 'हर ग़म की शिफ़ा है']
+        }];
+        
         // ============================================================
-        // 4. IMAGE TEMPLATES
+        // 6. IMAGE TEMPLATES
         // ============================================================
         const IMAGE_TEMPLATES = [{
             id: 1,
@@ -1689,9 +2061,9 @@
             textColor: '#ffffff',
             defaultText: '🤝 دوستی کا پیغام\nدل میں ہیں ہم'
         }];
-
+        
         // ============================================================
-        // 5. ACTIVE POSTS
+        // 7. ACTIVE POSTS
         // ============================================================
         const ACTIVE_POSTS = [{
             id: 1,
@@ -1736,9 +2108,21 @@
             isActive: false,
             content: 'ہزاروں خواہشیں ایسی\nکہ ہر خواہش پہ دم نکلے'
         }];
-
+        
         // ============================================================
-        // 6. STORAGE MANAGER
+        // 8. KEYWORDS DATABASE
+        // ============================================================
+        const KEYWORDS = [
+            '#شاعری', '#محبت', '#دل', '#غم', '#خوشی', '#امید', '#دوستی', '#ایمان',
+            '#اللہ', '#رسول', '#قرآن', '#نماز', '#دعا', '#سکون', '#روشنی', '#چاند',
+            '#ستارے', '#صبح', '#شام', '#رات', '#زندگی', '#موت', '#سفر', '#منزل',
+            '#خواب', '#حقیقت', '#یاد', '#بہار', '#خزاں', '#بارش', '#پھول', '#کانٹے'
+        ];
+        
+        let currentKeywordIndex = 0;
+        
+        // ============================================================
+        // 9. STORAGE MANAGER
         // ============================================================
         class StorageManager {
             static getPoems() {
@@ -1752,11 +2136,11 @@
                 localStorage.setItem('poetryHub_poems', JSON.stringify(DEFAULT_POEMS));
                 return [...DEFAULT_POEMS];
             }
-
+            
             static savePoems(poems) {
                 localStorage.setItem('poetryHub_poems', JSON.stringify(poems));
             }
-
+            
             static addPoem(poem) {
                 const poems = this.getPoems();
                 poem.id = Date.now() + Math.random() * 1000;
@@ -1764,14 +2148,14 @@
                 this.savePoems(poems);
                 return poems;
             }
-
+            
             static deletePoem(id) {
                 let poems = this.getPoems();
                 poems = poems.filter(p => p.id !== id);
                 this.savePoems(poems);
                 return poems;
             }
-
+            
             static getTemplates() {
                 try {
                     const data = localStorage.getItem('poetryHub_templates');
@@ -1783,20 +2167,52 @@
                 localStorage.setItem('poetryHub_templates', JSON.stringify(IMAGE_TEMPLATES));
                 return [...IMAGE_TEMPLATES];
             }
-
+            
             static saveTemplates(templates) {
                 localStorage.setItem('poetryHub_templates', JSON.stringify(templates));
             }
+            
+            static getFavorites() {
+                try {
+                    const data = localStorage.getItem('poetryHub_favorites');
+                    if (data) {
+                        const parsed = JSON.parse(data);
+                        if (parsed && parsed.length > 0) return parsed;
+                    }
+                } catch (e) {}
+                return [];
+            }
+            
+            static saveFavorites(favorites) {
+                localStorage.setItem('poetryHub_favorites', JSON.stringify(favorites));
+            }
+            
+            static addFavorite(poem) {
+                const favorites = this.getFavorites();
+                if (!favorites.find(p => p.id === poem.id)) {
+                    favorites.push(poem);
+                    this.saveFavorites(favorites);
+                }
+                return favorites;
+            }
+            
+            static removeFavorite(id) {
+                let favorites = this.getFavorites();
+                favorites = favorites.filter(p => p.id !== id);
+                this.saveFavorites(favorites);
+                return favorites;
+            }
         }
-
+        
         // ============================================================
-        // 7. FILTER POEMS BY TIME
+        // 10. FILTER POEMS BY TIME
         // ============================================================
         function filterPoemsByTime(poems) {
             const slot = getCurrentTimeSlot();
             if (slot === 'islamic') return poems.filter(p => p.timeSlot === 'islamic');
             if (slot === 'morning') return poems.filter(p => p.timeSlot === 'morning');
-            if (slot === 'love') return poems.filter(p => p.timeSlot === 'love' || p.category === 'love' || p.category === 'friendship');
+            if (slot === 'love') return poems.filter(p => p.timeSlot === 'love' || p.category === 'love' || p.category ===
+                'friendship');
             if (slot === 'general') return poems.filter(p => p.timeSlot === 'general' || p.category === 'ghazal');
             if (slot === 'evening') return poems.filter(p => p.timeSlot === 'evening' || p.category === 'sad');
             if (slot === 'night' || slot === 'night_midnight') {
@@ -1804,9 +2220,9 @@
             }
             return poems;
         }
-
+        
         // ============================================================
-        // 8. CINEMATIC ENVIRONMENT
+        // 11. CINEMATIC ENVIRONMENT (Optimized)
         // ============================================================
         class CinematicEnvironment {
             constructor() {
@@ -1819,13 +2235,15 @@
                 this.sceneObjects = [];
                 this.resizeTimeout = null;
                 this.time = 0;
-
+                this.isVisible = true;
+                
                 this.setupCanvas();
                 this.initializeScene();
-                this.animate();
                 this.setupResize();
+                this.setupVisibility();
+                this.animate();
             }
-
+            
             getTimeMode() {
                 const hour = new Date().getHours();
                 if (hour >= 5 && hour < 8) return 'morning';
@@ -1833,14 +2251,14 @@
                 if (hour >= 17 && hour < 19) return 'evening';
                 return 'night';
             }
-
+            
             setupCanvas() {
                 this.canvas.width = this.width;
                 this.canvas.height = this.height;
                 this.ctx.imageSmoothingEnabled = true;
                 this.ctx.imageSmoothingQuality = 'high';
             }
-
+            
             setupResize() {
                 window.addEventListener('resize', () => {
                     clearTimeout(this.resizeTimeout);
@@ -1853,7 +2271,19 @@
                     }, 200);
                 });
             }
-
+            
+            setupVisibility() {
+                document.addEventListener('visibilitychange', () => {
+                    this.isVisible = !document.hidden;
+                    if (!this.isVisible && this.animationId) {
+                        cancelAnimationFrame(this.animationId);
+                        this.animationId = null;
+                    } else if (this.isVisible && !this.animationId) {
+                        this.animate();
+                    }
+                });
+            }
+            
             initializeScene() {
                 this.sceneObjects = [];
                 switch (this.timeMode) {
@@ -1871,7 +2301,7 @@
                         break;
                 }
             }
-
+            
             createMorningScene() {
                 this.sceneObjects.push({
                     type: 'sun',
@@ -1883,29 +2313,29 @@
                     color1: '#FFD700',
                     color2: '#FF6B35'
                 });
-                for (let i = 0; i < 8; i++) {
+                for (let i = 0; i < 6; i++) {
                     this.sceneObjects.push({
                         type: 'cloud',
                         x: Math.random() * this.width,
                         y: Math.random() * this.height * 0.3 + this.height * 0.05,
-                        width: 80 + Math.random() * 120,
+                        width: 80 + Math.random() * 100,
                         speed: 0.2 + Math.random() * 0.3,
                         opacity: 0.3 + Math.random() * 0.3,
                         color: `rgba(255,255,255,${0.4 + Math.random() * 0.4})`
                     });
                 }
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 8; i++) {
                     this.sceneObjects.push({
                         type: 'bird',
                         x: Math.random() * this.width,
                         y: Math.random() * this.height * 0.25 + this.height * 0.05,
-                        speed: 0.8 + Math.random() * 1.5,
+                        speed: 0.8 + Math.random() * 1.2,
                         wingAngle: Math.random() * Math.PI * 2,
                         wingSpeed: 0.04 + Math.random() * 0.04,
                         size: 10 + Math.random() * 8
                     });
                 }
-                for (let i = 0; i < 60; i++) {
+                for (let i = 0; i < 40; i++) {
                     this.sceneObjects.push({
                         type: 'particle',
                         x: Math.random() * this.width,
@@ -1918,7 +2348,7 @@
                     });
                 }
             }
-
+            
             createDayScene() {
                 this.sceneObjects.push({
                     type: 'sun',
@@ -1930,18 +2360,18 @@
                     color2: '#FFA500',
                     rays: true
                 });
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 10; i++) {
                     this.sceneObjects.push({
                         type: 'cloud',
                         x: Math.random() * this.width,
                         y: Math.random() * this.height * 0.3 + this.height * 0.02,
-                        width: 100 + Math.random() * 160,
+                        width: 100 + Math.random() * 140,
                         speed: 0.4 + Math.random() * 0.6,
                         opacity: 0.6 + Math.random() * 0.3,
                         color: `rgba(255,255,255,${0.7 + Math.random() * 0.3})`
                     });
                 }
-                for (let i = 0; i < 40; i++) {
+                for (let i = 0; i < 30; i++) {
                     this.sceneObjects.push({
                         type: 'sparkle',
                         x: Math.random() * this.width,
@@ -1952,7 +2382,7 @@
                     });
                 }
             }
-
+            
             createEveningScene() {
                 this.sceneObjects.push({
                     type: 'sun',
@@ -1965,18 +2395,18 @@
                     color2: '#FF4500',
                     sunset: true
                 });
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 8; i++) {
                     this.sceneObjects.push({
                         type: 'cloud',
                         x: Math.random() * this.width,
                         y: Math.random() * this.height * 0.3 + this.height * 0.05,
-                        width: 90 + Math.random() * 140,
+                        width: 90 + Math.random() * 120,
                         speed: 0.15 + Math.random() * 0.25,
                         opacity: 0.4 + Math.random() * 0.3,
                         color: `rgba(255,140,66,${0.3 + Math.random() * 0.4})`
                     });
                 }
-                for (let i = 0; i < 80; i++) {
+                for (let i = 0; i < 50; i++) {
                     this.sceneObjects.push({
                         type: 'particle',
                         x: Math.random() * this.width,
@@ -1988,12 +2418,12 @@
                         color: `rgba(255,107,53,${0.2 + Math.random() * 0.3})`
                     });
                 }
-                for (let i = 0; i < 15; i++) {
+                for (let i = 0; i < 10; i++) {
                     this.sceneObjects.push({
                         type: 'bird',
                         x: Math.random() * this.width,
                         y: Math.random() * this.height * 0.2 + this.height * 0.15,
-                        speed: 0.6 + Math.random() * 1.2,
+                        speed: 0.6 + Math.random() * 1.0,
                         wingAngle: Math.random() * Math.PI * 2,
                         wingSpeed: 0.03 + Math.random() * 0.03,
                         size: 8 + Math.random() * 7,
@@ -2001,7 +2431,7 @@
                     });
                 }
             }
-
+            
             createNightScene() {
                 this.sceneObjects.push({
                     type: 'moon',
@@ -2010,7 +2440,7 @@
                     radius: 55,
                     glowRadius: 180
                 });
-                for (let i = 0; i < 200; i++) {
+                for (let i = 0; i < 150; i++) {
                     this.sceneObjects.push({
                         type: 'star',
                         x: Math.random() * this.width,
@@ -2021,7 +2451,7 @@
                         phase: Math.random() * Math.PI * 2
                     });
                 }
-                for (let i = 0; i < 3; i++) {
+                for (let i = 0; i < 2; i++) {
                     this.sceneObjects.push({
                         type: 'shootingStar',
                         x: Math.random() * this.width * 0.6,
@@ -2034,7 +2464,7 @@
                         cooldown: 150 + Math.random() * 200
                     });
                 }
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 60; i++) {
                     this.sceneObjects.push({
                         type: 'particle',
                         x: Math.random() * this.width,
@@ -2047,7 +2477,7 @@
                     });
                 }
             }
-
+            
             drawSky() {
                 const ctx = this.ctx;
                 const grad = ctx.createLinearGradient(0, 0, 0, this.height);
@@ -2080,7 +2510,7 @@
                 ctx.fillStyle = grad;
                 ctx.fillRect(0, 0, this.width, this.height);
             }
-
+            
             drawSun(obj) {
                 const ctx = this.ctx;
                 const x = obj.x,
@@ -2094,7 +2524,7 @@
                 ctx.beginPath();
                 ctx.arc(x, y, r * 4, 0, Math.PI * 2);
                 ctx.fill();
-
+                
                 const sunGrad = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, 0, x, y, r);
                 sunGrad.addColorStop(0, obj.color1 || '#FFD700');
                 sunGrad.addColorStop(0.7, obj.color2 || '#FFA500');
@@ -2103,10 +2533,10 @@
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.fill();
-
+                
                 if (obj.rays) {
-                    for (let i = 0; i < 16; i++) {
-                        const angle = (i / 16) * Math.PI * 2 + this.time * 0.0003;
+                    for (let i = 0; i < 12; i++) {
+                        const angle = (i / 12) * Math.PI * 2 + this.time * 0.0003;
                         const len = r * 1.6 + Math.sin(this.time * 0.001 + i) * 10;
                         ctx.beginPath();
                         ctx.moveTo(x + Math.cos(angle) * r * 1.1, y + Math.sin(angle) * r * 1.1);
@@ -2117,7 +2547,7 @@
                     }
                 }
             }
-
+            
             drawMoon(obj) {
                 const ctx = this.ctx;
                 const x = obj.x,
@@ -2131,7 +2561,7 @@
                 ctx.beginPath();
                 ctx.arc(x, y, obj.glowRadius || 200, 0, Math.PI * 2);
                 ctx.fill();
-
+                
                 const moonGrad = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, 0, x, y, r);
                 moonGrad.addColorStop(0, '#FFFFFF');
                 moonGrad.addColorStop(0.5, '#F0F0F0');
@@ -2141,7 +2571,7 @@
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.fill();
-
+                
                 const craters = [{ x: -15, y: -12, r: 7 }, { x: 20, y: 8, r: 10 }, { x: -22, y: 20, r: 5 }, { x: 12, y: -18,
                         r: 8 }, { x: -10, y: 22, r: 4 }];
                 craters.forEach(c => {
@@ -2151,7 +2581,7 @@
                     ctx.fill();
                 });
             }
-
+            
             drawCloud(obj) {
                 const ctx = this.ctx;
                 ctx.globalAlpha = obj.opacity || 0.7;
@@ -2174,7 +2604,7 @@
                 obj.x += obj.speed || 0;
                 if (obj.x > this.width + obj.width) obj.x = -obj.width;
             }
-
+            
             drawBird(obj) {
                 const ctx = this.ctx;
                 obj.wingAngle += obj.wingSpeed || 0.05;
@@ -2204,7 +2634,7 @@
                 if (obj.x < -30) { obj.x = this.width + 30;
                     obj.y = Math.random() * this.height * 0.25 + this.height * 0.05; }
             }
-
+            
             drawStar(obj) {
                 const ctx = this.ctx;
                 const twinkle = Math.sin(obj.phase + this.time * obj.twinkleSpeed) * 0.5 + 0.5;
@@ -2232,7 +2662,7 @@
                 }
                 ctx.globalAlpha = 1;
             }
-
+            
             drawShootingStar(obj) {
                 const ctx = this.ctx;
                 if (!obj.active) {
@@ -2262,7 +2692,7 @@
                 ctx.shadowBlur = 0;
                 ctx.globalAlpha = 1;
             }
-
+            
             drawParticle(obj) {
                 const ctx = this.ctx;
                 ctx.globalAlpha = obj.opacity || 0.5;
@@ -2278,7 +2708,7 @@
                 if (obj.x > this.width + 10) obj.x = -10;
                 if (obj.x < -10) obj.x = this.width + 10;
             }
-
+            
             drawSparkle(obj) {
                 const ctx = this.ctx;
                 const shimmer = Math.sin(this.time * obj.speed) * 0.5 + 0.5;
@@ -2289,7 +2719,7 @@
                 ctx.fillRect(obj.x - size / 10, obj.y - size / 2, size / 5, size);
                 ctx.globalAlpha = 1;
             }
-
+            
             updateSunPosition() {
                 const sun = this.sceneObjects.find(o => o.type === 'sun');
                 if (!sun) return;
@@ -2302,8 +2732,13 @@
                     sun.radius *= 0.999;
                 }
             }
-
+            
             animate() {
+                if (!this.isVisible) {
+                    this.animationId = null;
+                    return;
+                }
+                
                 this.time += 16;
                 this.ctx.clearRect(0, 0, this.width, this.height);
                 this.drawSky();
@@ -2338,14 +2773,17 @@
                 this.updateSunPosition();
                 this.animationId = requestAnimationFrame(() => this.animate());
             }
-
+            
             destroy() {
-                if (this.animationId) cancelAnimationFrame(this.animationId);
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                    this.animationId = null;
+                }
             }
         }
-
+        
         // ============================================================
-        // 9. POETRY MANAGER
+        // 12. POETRY MANAGER
         // ============================================================
         class PoetryManager {
             constructor() {
@@ -2356,19 +2794,89 @@
                 this.isPlaying = true;
                 this.interval = null;
                 this.poems = this.getTimeFilteredPoems();
+                this.poetryTypes = ['2line', '4line', 'ghazal', 'nazm'];
+                this.currentTypeIndex = 0;
             }
-
+            
             getTimeFilteredPoems() {
                 return filterPoemsByTime(this.allPoems);
             }
-
+            
+            getPoemsByType(type) {
+                return this.poems.filter(p => p.type === type);
+            }
+            
+            getNextPoetryType() {
+                const types = ['2line', '4line', 'ghazal', 'nazm'];
+                // Get all poems of current type
+                let typePoems = this.getPoemsByType(types[this.currentTypeIndex]);
+                
+                // If no poems of this type, skip to next
+                while (typePoems.length === 0) {
+                    this.currentTypeIndex = (this.currentTypeIndex + 1) % types.length;
+                    typePoems = this.getPoemsByType(types[this.currentTypeIndex]);
+                    if (this.currentTypeIndex === 0 && typePoems.length === 0) break;
+                }
+                
+                // Update current index to first poem of this type
+                const typeName = types[this.currentTypeIndex];
+                const typePoemsList = this.getPoemsByType(typeName);
+                if (typePoemsList.length > 0) {
+                    const firstIndex = this.poems.findIndex(p => p.id === typePoemsList[0].id);
+                    if (firstIndex !== -1) {
+                        this.currentIndex = firstIndex;
+                    }
+                }
+                
+                // Move to next type for next rotation
+                const nextType = (this.currentTypeIndex + 1) % types.length;
+                // Check if next type has poems
+                const nextTypePoems = this.getPoemsByType(types[nextType]);
+                if (nextTypePoems.length > 0) {
+                    this.currentTypeIndex = nextType;
+                } else {
+                    // Skip to next type with poems
+                    for (let i = 0; i < types.length; i++) {
+                        const checkType = (this.currentTypeIndex + i) % types.length;
+                        if (this.getPoemsByType(types[checkType]).length > 0) {
+                            this.currentTypeIndex = checkType;
+                            break;
+                        }
+                    }
+                }
+                
+                return typeName;
+            }
+            
+            getCurrentPoem() {
+                return this.poems[this.currentIndex] || this.poems[0] || this.allPoems[0];
+            }
+            
+            getLines() {
+                const poem = this.getCurrentPoem();
+                return poem[this.currentLang] || poem.urdu;
+            }
+            
+            getPoetryType() {
+                const poem = this.getCurrentPoem();
+                return poem.type || '2line';
+            }
+            
+            getCategory() {
+                return this.getCurrentPoem().category || 'all';
+            }
+            
+            getTags() {
+                return this.getCurrentPoem().tags || [];
+            }
+            
             refreshPoems() {
                 this.allPoems = StorageManager.getPoems();
                 this.poems = this.getTimeFilteredPoems();
                 if (this.poems.length === 0) this.poems = [...this.allPoems];
                 this.currentIndex = 0;
             }
-
+            
             applyCategoryFilter(category) {
                 this.category = category;
                 if (category === 'all') {
@@ -2379,69 +2887,54 @@
                 if (this.poems.length === 0) this.poems = this.getTimeFilteredPoems();
                 this.currentIndex = 0;
             }
-
-            getCurrentPoem() {
-                return this.poems[this.currentIndex] || this.poems[0] || this.allPoems[0];
-            }
-
-            getLines() {
-                const poem = this.getCurrentPoem();
-                return poem[this.currentLang] || poem.urdu;
-            }
-
-            getCategory() {
-                return this.getCurrentPoem().category || 'all';
-            }
-
-            getTags() {
-                return this.getCurrentPoem().tags || [];
-            }
-
+            
             next() {
                 if (this.poems.length === 0) return;
                 this.currentIndex = (this.currentIndex + 1) % this.poems.length;
                 return this.getLines();
             }
-
+            
             previous() {
                 if (this.poems.length === 0) return;
                 this.currentIndex = (this.currentIndex - 1 + this.poems.length) % this.poems.length;
                 return this.getLines();
             }
-
+            
             setLanguage(lang) {
                 if (['ur', 'roman', 'hi'].includes(lang)) {
                     this.currentLang = lang;
                 }
             }
-
+            
             togglePlay() {
                 this.isPlaying = !this.isPlaying;
                 return this.isPlaying;
             }
-
+            
             startAutoRotation(callback, interval = 12000) {
                 if (this.interval) clearInterval(this.interval);
                 this.interval = setInterval(() => {
                     if (this.isPlaying) {
+                        // Refresh time-based filtering
                         const newPoems = this.getTimeFilteredPoems();
                         if (newPoems.length > 0) {
                             this.poems = newPoems;
-                            this.currentIndex = 0;
+                            // Get next poetry type
+                            this.getNextPoetryType();
                         }
                         callback(this.next());
                     }
                 }, interval);
             }
-
+            
             stopAutoRotation() {
                 if (this.interval) { clearInterval(this.interval);
                     this.interval = null; }
             }
         }
-
+        
         // ============================================================
-        // 10. UI CONTROLLER
+        // 13. UI CONTROLLER
         // ============================================================
         class UIController {
             constructor() {
@@ -2450,14 +2943,16 @@
                 this.elements = {};
                 this.templates = StorageManager.getTemplates();
                 this.activePosts = JSON.parse(JSON.stringify(ACTIVE_POSTS));
+                this.favorites = StorageManager.getFavorites();
                 this.init();
             }
-
+            
             init() {
                 this.elements = {
                     line1: document.getElementById('line1'),
                     line2: document.getElementById('line2'),
                     line3: document.getElementById('line3'),
+                    line4: document.getElementById('line4'),
                     category: document.getElementById('poetryCategory'),
                     counter: document.getElementById('poetryCounter'),
                     tags: document.getElementById('poetryTags'),
@@ -2479,51 +2974,57 @@
                     activePostsGrid: document.getElementById('activePostsGrid'),
                     timeScheduleBadge: document.getElementById('timeScheduleBadge'),
                     greetingText: document.getElementById('greetingText'),
-                    timeMessage: document.getElementById('timeMessage')
+                    timeMessage: document.getElementById('timeMessage'),
+                    favoritesGrid: document.getElementById('favoritesGrid'),
+                    poetryTypeBadge: document.getElementById('poetryTypeBadge'),
+                    keywordDisplay: document.getElementById('keywordDisplay'),
+                    appTitle: document.getElementById('appTitle')
                 };
-
+                
                 this.setupEvents();
                 this.updateDisplay();
                 this.renderPosts();
                 this.renderTemplates();
                 this.renderActivePosts();
+                this.renderFavorites();
                 this.updateTimeSchedule();
                 this.startTimeUpdate();
+                this.startKeywordRotation();
                 this.poetryManager.startAutoRotation(() => {
                     this.updateDisplay();
                     this.renderPosts();
                     this.updateTimeSchedule();
                     this.renderActivePosts();
                 });
-
+                
                 setTimeout(() => {
                     this.environment = new CinematicEnvironment();
                 }, 100);
             }
-
+            
             setupEvents() {
                 this.elements.prevBtn.addEventListener('click', () => {
                     this.poetryManager.previous();
                     this.updateDisplay();
                 });
-
+                
                 this.elements.nextBtn.addEventListener('click', () => {
                     this.poetryManager.next();
                     this.updateDisplay();
                 });
-
+                
                 this.elements.playBtn.addEventListener('click', () => {
                     const isPlaying = this.poetryManager.togglePlay();
                     this.elements.playBtn.textContent = isPlaying ? '⏸' : '▶️';
                 });
-
+                
                 this.elements.langBtns.forEach(btn => {
                     btn.addEventListener('click', () => {
                         const lang = btn.dataset.lang;
                         changeLanguage(lang);
                     });
                 });
-
+                
                 this.elements.categoryCards.forEach(card => {
                     card.addEventListener('click', () => {
                         this.elements.categoryCards.forEach(c => c.classList.remove('active'));
@@ -2533,7 +3034,7 @@
                         this.renderPosts();
                     });
                 });
-
+                
                 this.elements.copyBtn.addEventListener('click', () => {
                     const poem = this.poetryManager.getCurrentPoem();
                     const text = poem[this.poetryManager.currentLang].join('\n');
@@ -2543,7 +3044,7 @@
                         this.showNotification('📋 Copy: ' + text);
                     });
                 });
-
+                
                 this.elements.shareBtn.addEventListener('click', () => {
                     const poem = this.poetryManager.getCurrentPoem();
                     const text = poem[this.poetryManager.currentLang].join('\n');
@@ -2553,17 +3054,16 @@
                         this.showNotification('📤 Share: ' + text.substring(0, 50) + '...');
                     }
                 });
-
+                
                 this.elements.saveBtn.addEventListener('click', () => {
                     const poem = this.poetryManager.getCurrentPoem();
-                    this.saveToFavorites(poem);
-                    this.showNotification('❤️ Saved to favorites!');
+                    this.addToFavorites(poem);
                 });
-
+                
                 this.elements.searchInput.addEventListener('keyup', () => {
                     this.renderPosts();
                 });
-
+                
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowRight') {
                         this.poetryManager.next();
@@ -2577,23 +3077,74 @@
                     }
                 });
             }
-
+            
+            startKeywordRotation() {
+                setInterval(() => {
+                    const keywords = KEYWORDS;
+                    const display = this.elements.keywordDisplay;
+                    const items = display.querySelectorAll('.keyword-item');
+                    
+                    if (items.length > 0) {
+                        // Fade out current
+                        items.forEach(item => {
+                            item.style.transition = 'opacity 0.5s';
+                            item.style.opacity = '0';
+                        });
+                        
+                        setTimeout(() => {
+                            // Update keywords
+                            const newKeywords = [];
+                            for (let i = 0; i < 3; i++) {
+                                const idx = (currentKeywordIndex + i) % keywords.length;
+                                newKeywords.push(keywords[idx]);
+                            }
+                            currentKeywordIndex = (currentKeywordIndex + 3) % keywords.length;
+                            
+                            display.innerHTML = newKeywords.map(k =>
+                                `<span class="keyword-item" style="opacity:0;animation:fadeIn 0.5s ease forwards;">${k}</span>`
+                            ).join('');
+                            
+                            // Trigger animation
+                            setTimeout(() => {
+                                display.querySelectorAll('.keyword-item').forEach((item, i) => {
+                                    setTimeout(() => {
+                                        item.style.opacity = '1';
+                                    }, i * 100);
+                                });
+                            }, 50);
+                        }, 500);
+                    }
+                }, 8000);
+            }
+            
             updateDisplay() {
                 const lines = this.poetryManager.getLines();
                 const poem = this.poetryManager.getCurrentPoem();
                 const total = this.poetryManager.poems.length;
                 const current = this.poetryManager.currentIndex + 1;
-
+                const type = this.poetryManager.getPoetryType();
+                
                 const container = this.elements.poetryLines;
                 container.style.animation = 'none';
                 container.offsetHeight;
                 container.style.animation = 'fadeOut 0.25s ease';
-
+                
                 setTimeout(() => {
-                    this.elements.line1.textContent = lines[0] || '';
-                    this.elements.line2.textContent = lines[1] || '';
-                    this.elements.line3.textContent = lines[2] || '';
-
+                    // Show appropriate number of lines based on type
+                    const lineCount = Math.min(lines.length, 4);
+                    const lineElements = [this.elements.line1, this.elements.line2, this.elements.line3, this.elements
+                        .line4
+                    ];
+                    
+                    lineElements.forEach((el, i) => {
+                        if (i < lineCount) {
+                            el.textContent = lines[i] || '';
+                            el.style.display = 'block';
+                        } else {
+                            el.style.display = 'none';
+                        }
+                    });
+                    
                     const lang = this.poetryManager.currentLang;
                     document.querySelectorAll('.poetry-line').forEach(line => {
                         line.className = 'poetry-line';
@@ -2601,10 +3152,19 @@
                         else if (lang === 'roman') line.classList.add('roman-text');
                         else if (lang === 'hi') line.classList.add('hindi-text');
                     });
-
+                    
                     container.style.animation = 'fadeIn 0.4s ease';
                 }, 250);
-
+                
+                // Update poetry type badge
+                const typeNames = {
+                    '2line': '📝 دو لائن',
+                    '4line': '📄 چار لائن',
+                    'ghazal': '🎵 غزل',
+                    'nazm': '📜 نظم'
+                };
+                this.elements.poetryTypeBadge.textContent = typeNames[type] || type;
+                
                 const catEmoji = { love: '❤️', sad: '💔', islamic: '🕌', friendship: '🤝', morning: '🌅', night: '🌙',
                     ghazal: '🎵' };
                 const emoji = catEmoji[poem.category] || '📜';
@@ -2612,20 +3172,20 @@
                 const categoryName = t[poem.category] || poem.category;
                 this.elements.category.textContent = `${emoji} ${categoryName} Poetry`;
                 this.elements.counter.textContent = `${current} / ${total}`;
-
+                
                 this.elements.tags.innerHTML = (poem.tags || []).map(t =>
                     `<span class="tag">#${t}</span>`
                 ).join('');
             }
-
+            
             renderPosts() {
                 const searchTerm = this.elements.searchInput.value.toLowerCase();
                 let poems = this.poetryManager.allPoems;
-
+                
                 if (this.poetryManager.category !== 'all') {
                     poems = poems.filter(p => p.category === this.poetryManager.category);
                 }
-
+                
                 if (searchTerm) {
                     poems = poems.filter(p => {
                         const urduText = p.urdu.join(' ').toLowerCase();
@@ -2636,29 +3196,32 @@
                             hindiText.includes(searchTerm);
                     });
                 }
-
+                
                 const container = this.elements.postsContainer;
                 const t = TRANSLATIONS[currentLanguage];
-
+                
                 if (poems.length === 0) {
                     container.innerHTML = `<div class="no-posts">${t.noPosts}</div>`;
                     this.elements.searchStats.textContent = t.searchStats.replace('{count}', '0');
                     return;
                 }
-
+                
                 this.elements.searchStats.textContent = t.searchStats.replace('{count}', poems.length);
-
+                
                 const catEmoji = { love: '❤️', sad: '💔', islamic: '🕌', friendship: '🤝', morning: '🌅', night: '🌙',
                     ghazal: '🎵' };
-
+                
                 container.innerHTML = poems.map(poem => {
                     const text = poem[this.poetryManager.currentLang] || poem.urdu;
                     const textDisplay = text.join('<br>');
                     const emoji = catEmoji[poem.category] || '📜';
                     const categoryName = t[poem.category] || poem.category;
-
+                    const typeNames = { '2line': '📝 2-Line', '4line': '📄 4-Line', 'ghazal': '🎵 Ghazal', 'nazm': '📜 Nazm' };
+                    const typeName = typeNames[poem.type] || poem.type;
+                    
                     return `
                             <div class="post-card" data-id="${poem.id}">
+                                <div style="font-size:0.65rem;opacity:0.5;margin-bottom:0.3rem;font-family:var(--font-roman);">${typeName}</div>
                                 <div class="post-text">${textDisplay}</div>
                                 <div class="post-meta">
                                     <span class="post-category">${emoji} ${categoryName}</span>
@@ -2668,30 +3231,31 @@
                         `;
                 }).join('');
             }
-
+            
             renderTemplates() {
                 const container = this.elements.templateGrid;
                 const t = TRANSLATIONS[currentLanguage];
-
+                
                 container.innerHTML = this.templates.map(template => `
                         <div class="template-card">
                             <div class="template-preview" style="background: ${template.bgColor}; color: ${template.textColor};">
                                 ${template.defaultText.replace('\n', '<br>')}
                             </div>
-                            <h4 style="font-size:0.9rem;margin-bottom:0.5rem;">${template.name}</h4>
+                            <h4 style="font-size:0.8rem;margin-bottom:0.4rem;">${template.name}</h4>
                             <div class="template-actions">
                                 <button class="btn-edit-template" onclick="editTemplate(${template.id})">${t.editTemplate}</button>
                                 <button class="btn-download-template" onclick="downloadTemplate(${template.id})">${t.downloadTemplate}</button>
+                                <button class="btn-whatsapp-template" onclick="shareWhatsApp(${template.id})">${t.whatsappTemplate}</button>
                             </div>
                         </div>
                     `).join('');
             }
-
+            
             renderActivePosts() {
                 const container = this.elements.activePostsGrid;
                 const currentSlot = getCurrentTimeSlot();
                 const t = TRANSLATIONS[currentLanguage];
-
+                
                 this.activePosts = this.activePosts.map(post => {
                     let isActive = false;
                     if (post.category === 'islamic' && currentSlot === 'islamic') isActive = true;
@@ -2703,23 +3267,45 @@
                         isActive = true;
                     return { ...post, isActive };
                 });
-
+                
                 container.innerHTML = this.activePosts.map(post => `
                         <div class="active-post-card ${post.isActive ? 'active' : ''}">
                             <div class="post-header">
                                 <span class="post-title">${post.title}</span>
                                 <span class="post-status ${post.isActive ? 'active-status' : 'inactive-status'}">
-                                    ${post.isActive ? '✅ ' + (t.active || 'Active') : '⏳ ' + (t.inactive || 'Inactive')}
+                                    ${post.isActive ? '✅ ' + t.active : '⏳ ' + t.inactive}
                                 </span>
                             </div>
-                            <div style="font-size:0.9rem;opacity:0.7;margin:0.5rem 0;font-family:var(--font-urdu);line-height:1.8;">
+                            <div style="font-size:0.8rem;opacity:0.7;margin:0.3rem 0;font-family:var(--font-urdu);line-height:1.8;">
                                 ${post.content.replace('\n', '<br>')}
                             </div>
                             <div class="post-time">🕐 ${post.schedule}</div>
                         </div>
                     `).join('');
             }
-
+            
+            renderFavorites() {
+                const container = this.elements.favoritesGrid;
+                const t = TRANSLATIONS[currentLanguage];
+                this.favorites = StorageManager.getFavorites();
+                
+                if (this.favorites.length === 0) {
+                    container.innerHTML = `<div class="no-favorites">${t.noFavorites}</div>`;
+                    return;
+                }
+                
+                container.innerHTML = this.favorites.map(poem => {
+                    const text = poem[this.poetryManager.currentLang] || poem.urdu;
+                    const textDisplay = text.join('<br>');
+                    return `
+                            <div class="favorite-item">
+                                <div class="fav-text">${textDisplay}</div>
+                                <button class="fav-remove" onclick="removeFavorite(${poem.id})">${t.removeFav}</button>
+                            </div>
+                        `;
+                }).join('');
+            }
+            
             updateTimeSchedule() {
                 const slot = getCurrentTimeSlot();
                 const t = TRANSLATIONS[currentLanguage];
@@ -2729,13 +3315,13 @@
                 const minutes = new Date().getMinutes();
                 const timeStr = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
                 this.elements.timeScheduleBadge.textContent = `🕐 ${timeStr} - ${emoji} ${label}`;
-
+                
                 const greetings = t.greetings || {};
                 const messages = t.messages || {};
                 this.elements.greetingText.textContent = greetings[slot] || '🌅 صبح بخیر';
                 this.elements.timeMessage.textContent = messages[slot] || 'نئی صبح، نئی امید';
             }
-
+            
             startTimeUpdate() {
                 setInterval(() => {
                     const now = new Date();
@@ -2752,15 +3338,14 @@
                     this.renderActivePosts();
                 }, 10000);
             }
-
-            saveToFavorites(poem) {
-                let favorites = JSON.parse(localStorage.getItem('poetryFavorites') || '[]');
-                if (!favorites.find(p => p.id === poem.id)) {
-                    favorites.push(poem);
-                    localStorage.setItem('poetryFavorites', JSON.stringify(favorites));
-                }
+            
+            addToFavorites(poem) {
+                const favorites = StorageManager.addFavorite(poem);
+                this.favorites = favorites;
+                this.renderFavorites();
+                this.showNotification('❤️ Added to favorites!');
             }
-
+            
             showNotification(message) {
                 const existing = document.querySelector('.notification');
                 if (existing) existing.remove();
@@ -2774,44 +3359,49 @@
                 }, 3000);
             }
         }
-
+        
         // ============================================================
-        // 11. LANGUAGE CHANGE FUNCTION
+        // 14. LANGUAGE CHANGE FUNCTION
         // ============================================================
         function changeLanguage(lang) {
             currentLanguage = lang;
-
-            // Update body class
+            
             document.body.className = 'lang-' + lang;
-
-            // Update active button
+            
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
-
-            // Update poetry manager language
+            
             if (window.uiController) {
                 window.uiController.poetryManager.setLanguage(lang);
                 window.uiController.updateDisplay();
                 window.uiController.renderPosts();
                 window.uiController.renderTemplates();
                 window.uiController.renderActivePosts();
+                window.uiController.renderFavorites();
                 window.uiController.updateTimeSchedule();
-
-                // Update placeholder texts
+                
                 const t = TRANSLATIONS[lang];
                 document.getElementById('searchInput').placeholder = t.searchPlaceholder;
                 document.getElementById('newPoemInput').placeholder = t.addPoemPlaceholder;
                 document.querySelector('.btn-add').textContent = t.addPoemBtn;
-
-                // Update all elements with data-lang attributes
-                document.querySelectorAll('[data-lang-key]').forEach(el => {
-                    const key = el.dataset.langKey;
-                    if (t[key]) el.textContent = t[key];
-                });
+                document.getElementById('controlTitle').textContent = t.controlTitle;
+                document.getElementById('categoriesTitle').textContent = t.categoriesTitle;
+                document.getElementById('toolsTitle').textContent = t.toolsTitle;
+                document.getElementById('footerText').textContent = t.footerText;
+                document.getElementById('appTitle').textContent = t.appTitle;
+                
+                // Update category names
+                document.getElementById('catAll').textContent = t.all;
+                document.getElementById('catIslamic').textContent = t.islamic;
+                document.getElementById('catMorning').textContent = t.morning;
+                document.getElementById('catLove').textContent = t.love;
+                document.getElementById('catSad').textContent = t.sad;
+                document.getElementById('catFriendship').textContent = t.friendship;
+                document.getElementById('catGhazal').textContent = t.ghazal;
+                document.getElementById('catNight').textContent = t.night;
             }
-
-            // Update RTL/LTR
+            
             if (lang === 'ur') {
                 document.documentElement.dir = 'rtl';
                 document.documentElement.lang = 'ur';
@@ -2822,30 +3412,36 @@
                 document.documentElement.dir = 'ltr';
                 document.documentElement.lang = 'hi';
             }
-
+            
             console.log('🌍 Language changed to:', lang);
         }
-
+        
         // ============================================================
-        // 12. GLOBAL FUNCTIONS
+        // 15. GLOBAL FUNCTIONS
         // ============================================================
-
+        
         function addPoem() {
             const input = document.getElementById('newPoemInput');
             const text = input.value.trim();
             const t = TRANSLATIONS[currentLanguage];
-
+            
             if (!text) {
                 showNotificationGlobal('⚠️ براہ کرم شاعری لکھیں!');
                 return;
             }
-
+            
             const lines = text.split('\n').filter(line => line.trim());
             if (lines.length === 0) {
                 showNotificationGlobal('⚠️ براہ کرم شاعری لکھیں!');
                 return;
             }
-
+            
+            // Determine type based on line count
+            let type = '2line';
+            if (lines.length >= 4) type = '4line';
+            if (lines.length >= 6) type = 'ghazal';
+            if (lines.length >= 8) type = 'nazm';
+            
             let category = 'love';
             const lowerText = text.toLowerCase();
             if (lowerText.includes('دوست') || lowerText.includes('friend')) category = 'friendship';
@@ -2858,31 +3454,32 @@
             else if (lowerText.includes('غم') || lowerText.includes('sad') || lowerText.includes('رو') || lowerText
                 .includes('اشک')) category = 'sad';
             else if (lowerText.includes('غزل') || lowerText.includes('ghazal')) category = 'ghazal';
-
+            
             const currentSlot = getCurrentTimeSlot();
             const newPoem = {
                 id: Date.now() + Math.random() * 1000,
                 category: category,
                 timeSlot: currentSlot,
+                type: type,
                 tags: [category.charAt(0).toUpperCase() + category.slice(1), 'Urdu'],
                 urdu: lines,
-                roman: lines.map(l => transliterateUrduToRoman(l)),
-                hindi: lines.map(l => transliterateUrduToHindi(l))
+                roman: lines,
+                hindi: lines
             };
-
+            
             StorageManager.addPoem(newPoem);
-
+            
             if (window.uiController) {
                 window.uiController.poetryManager.allPoems = StorageManager.getPoems();
                 window.uiController.poetryManager.poems = window.uiController.poetryManager.getTimeFilteredPoems();
                 window.uiController.renderPosts();
                 window.uiController.updateDisplay();
             }
-
+            
             input.value = '';
             showNotificationGlobal('✅ شاعری شامل کر دی گئی! ✨');
         }
-
+        
         function deletePoem(id) {
             const t = TRANSLATIONS[currentLanguage];
             if (confirm('کیا آپ واقعی یہ شاعری حذف کرنا چاہتے ہیں؟')) {
@@ -2896,97 +3493,22 @@
                 showNotificationGlobal('🗑️ شاعری حذف کر دی گئی');
             }
         }
-
-        // Simple transliteration (basic mapping)
-        function transliterateUrduToRoman(text) {
-            const map = {
-                'ا': 'a',
-                'ب': 'b',
-                'پ': 'p',
-                'ت': 't',
-                'ٹ': 't',
-                'ث': 's',
-                'ج': 'j',
-                'چ': 'ch',
-                'ح': 'h',
-                'خ': 'kh',
-                'د': 'd',
-                'ڈ': 'd',
-                'ذ': 'z',
-                'ر': 'r',
-                'ڑ': 'r',
-                'ز': 'z',
-                'ژ': 'zh',
-                'س': 's',
-                'ش': 'sh',
-                'ص': 's',
-                'ض': 'z',
-                'ط': 't',
-                'ظ': 'z',
-                'ع': 'a',
-                'غ': 'gh',
-                'ف': 'f',
-                'ق': 'q',
-                'ک': 'k',
-                'گ': 'g',
-                'ل': 'l',
-                'م': 'm',
-                'ن': 'n',
-                'و': 'o',
-                'ہ': 'h',
-                'ی': 'y',
-                'ے': 'e'
-            };
-            return text.split('').map(char => map[char] || char).join('');
+        
+        function removeFavorite(id) {
+            StorageManager.removeFavorite(id);
+            if (window.uiController) {
+                window.uiController.favorites = StorageManager.getFavorites();
+                window.uiController.renderFavorites();
+            }
+            showNotificationGlobal('❤️ Removed from favorites');
         }
-
-        function transliterateUrduToHindi(text) {
-            const map = {
-                'ا': 'अ',
-                'ب': 'ब',
-                'پ': 'प',
-                'ت': 'त',
-                'ٹ': 'ट',
-                'ث': 'स',
-                'ج': 'ज',
-                'چ': 'च',
-                'ح': 'ह',
-                'خ': 'ख',
-                'د': 'द',
-                'ڈ': 'ड',
-                'ذ': 'ज़',
-                'ر': 'र',
-                'ڑ': 'ड़',
-                'ز': 'ज़',
-                'ژ': 'झ',
-                'س': 'स',
-                'ش': 'श',
-                'ص': 'स',
-                'ض': 'ज़',
-                'ط': 'त',
-                'ظ': 'ज़',
-                'ع': 'अ',
-                'غ': 'ग़',
-                'ف': 'फ़',
-                'ق': 'क़',
-                'ک': 'क',
-                'گ': 'ग',
-                'ل': 'ल',
-                'م': 'म',
-                'ن': 'न',
-                'و': 'व',
-                'ہ': 'ह',
-                'ی': 'य',
-                'ے': 'ए'
-            };
-            return text.split('').map(char => map[char] || char).join('');
-        }
-
+        
+        // ===== TEMPLATE FUNCTIONS =====
         function editTemplate(id) {
             const templates = StorageManager.getTemplates();
             const template = templates.find(t => t.id === id);
             if (!template) return;
-
+            
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.innerHTML = `
@@ -3004,13 +3526,13 @@
                 `;
             document.body.appendChild(modal);
         }
-
+        
         function saveTemplateEdit(id) {
             const name = document.getElementById('editTemplateName').value;
             const text = document.getElementById('editTemplateText').value;
             const bg = document.getElementById('editTemplateBg').value;
             const textColor = document.getElementById('editTemplateTextColor').value;
-
+            
             const templates = StorageManager.getTemplates();
             const index = templates.findIndex(t => t.id === id);
             if (index !== -1) {
@@ -3022,62 +3544,181 @@
                     textColor: textColor || templates[index].textColor
                 };
                 StorageManager.saveTemplates(templates);
-
+                
                 if (window.uiController) {
                     window.uiController.templates = templates;
                     window.uiController.renderTemplates();
                 }
-
+                
                 document.querySelector('.modal-overlay')?.remove();
                 showNotificationGlobal('✅ ٹیمپلیٹ محفوظ کر دیا گیا!');
             }
         }
-
+        
         function downloadTemplate(id) {
             const templates = StorageManager.getTemplates();
             const template = templates.find(t => t.id === id);
             if (!template) return;
-
+            
             const canvas = document.createElement('canvas');
             canvas.width = 800;
             canvas.height = 600;
             const ctx = canvas.getContext('2d');
-
+            
+            // Fix gradient extraction - use regex to find hex colors
+            const matches = template.bgColor.match(/#[0-9A-Fa-f]{3,8}/g);
             const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            const colors = template.bgColor.replace('linear-gradient(', '').replace(')', '').split(',');
-            if (colors.length >= 2) {
-                grad.addColorStop(0, colors[0].trim());
-                grad.addColorStop(1, colors[1].trim());
+            
+            if (matches && matches.length >= 2) {
+                grad.addColorStop(0, matches[0]);
+                grad.addColorStop(1, matches[matches.length - 1]);
             } else {
                 grad.addColorStop(0, '#1a1a2e');
                 grad.addColorStop(1, '#16213e');
             }
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+            
+            // Border
             ctx.strokeStyle = 'rgba(255,255,255,0.1)';
             ctx.lineWidth = 2;
             ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
-
+            
+            // Text with web font support
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = template.textColor || '#ffffff';
-            ctx.font = 'bold 48px "Jameel Noori Nastaleeq", "Noto Nastaliq Urdu", serif';
-
+            ctx.font = 'bold 48px "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif';
+            
             const lines = template.defaultText.split('\n');
             lines.forEach((line, i) => {
                 const y = canvas.height / 2 - (lines.length - 1) * 40 + i * 80;
                 ctx.fillText(line, canvas.width / 2, y);
             });
-
+            
+            // Download
             const link = document.createElement('a');
             link.download = `${template.name.replace(/\s/g, '_')}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
-
+            
             showNotificationGlobal('⬇️ تصویر ڈاؤن لوڈ ہو رہی ہے!');
         }
-
+        
+        function shareWhatsApp(id) {
+            const templates = StorageManager.getTemplates();
+            const template = templates.find(t => t.id === id);
+            if (!template) return;
+            
+            // Create image
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+            
+            const matches = template.bgColor.match(/#[0-9A-Fa-f]{3,8}/g);
+            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            if (matches && matches.length >= 2) {
+                grad.addColorStop(0, matches[0]);
+                grad.addColorStop(1, matches[matches.length - 1]);
+            } else {
+                grad.addColorStop(0, '#1a1a2e');
+                grad.addColorStop(1, '#16213e');
+            }
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = template.textColor || '#ffffff';
+            ctx.font = 'bold 48px "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif';
+            
+            const lines = template.defaultText.split('\n');
+            lines.forEach((line, i) => {
+                const y = canvas.height / 2 - (lines.length - 1) * 40 + i * 80;
+                ctx.fillText(line, canvas.width / 2, y);
+            });
+            
+            // Share via WhatsApp
+            const dataUrl = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'poetry_share.png';
+            link.click();
+            
+            // Try to share via WhatsApp
+            const text = encodeURIComponent(template.defaultText + '\n\n📜 Poetry Time Hub');
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+            
+            showNotificationGlobal('📱 واٹس ایپ پر شیئر کریں!');
+        }
+        
+        // ===== BACKUP FUNCTIONS =====
+        function exportBackup() {
+            const data = {
+                poems: StorageManager.getPoems(),
+                templates: StorageManager.getTemplates(),
+                favorites: StorageManager.getFavorites(),
+                exportedAt: new Date().toISOString(),
+                version: '1.0.0'
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `poetry_backup_${new Date().toISOString().slice(0,10)}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showNotificationGlobal('📤 ڈیٹا ایکسپورٹ ہو گیا!');
+        }
+        
+        function importBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (data.poems && Array.isArray(data.poems)) {
+                        StorageManager.savePoems(data.poems);
+                    }
+                    if (data.templates && Array.isArray(data.templates)) {
+                        StorageManager.saveTemplates(data.templates);
+                    }
+                    if (data.favorites && Array.isArray(data.favorites)) {
+                        StorageManager.saveFavorites(data.favorites);
+                    }
+                    
+                    if (window.uiController) {
+                        window.uiController.poetryManager.allPoems = StorageManager.getPoems();
+                        window.uiController.poetryManager.poems = window.uiController.poetryManager
+                        .getTimeFilteredPoems();
+                        window.uiController.templates = StorageManager.getTemplates();
+                        window.uiController.favorites = StorageManager.getFavorites();
+                        window.uiController.renderPosts();
+                        window.uiController.updateDisplay();
+                        window.uiController.renderTemplates();
+                        window.uiController.renderFavorites();
+                    }
+                    
+                    showNotificationGlobal('✅ ڈیٹا بحال کر دیا گیا!');
+                } catch (err) {
+                    showNotificationGlobal('❌ غلط فائل! براہ کرم درست JSON فائل منتخب کریں۔');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+        
+        // ===== NOTIFICATION =====
         function showNotificationGlobal(message) {
             const existing = document.querySelector('.notification');
             if (existing) existing.remove();
@@ -3090,33 +3731,39 @@
                 setTimeout(() => notif.remove(), 300);
             }, 3000);
         }
-
+        
         // ============================================================
-        // 13. START APPLICATION
+        // 16. START APPLICATION
         // ============================================================
         document.addEventListener('DOMContentLoaded', () => {
             const ui = new UIController();
             window.uiController = ui;
-
+            
             window.addPoem = addPoem;
             window.deletePoem = deletePoem;
+            window.removeFavorite = removeFavorite;
             window.editTemplate = editTemplate;
             window.saveTemplateEdit = saveTemplateEdit;
             window.downloadTemplate = downloadTemplate;
+            window.shareWhatsApp = shareWhatsApp;
+            window.exportBackup = exportBackup;
+            window.importBackup = importBackup;
             window.changeLanguage = changeLanguage;
-
-            // Set default language
+            
             changeLanguage('ur');
-
-            console.log('🌅 Poetry Time Hub - Living Poetry World');
+            
+            console.log('🌅 Poetry Time Hub - Production Ready');
             console.log('📜 Loaded ' + StorageManager.getPoems().length + ' poems');
             console.log('🖼️ Loaded ' + StorageManager.getTemplates().length + ' templates');
+            console.log('❤️ Favorites: ' + StorageManager.getFavorites().length);
             console.log('⏰ Local Time:', new Date().toLocaleTimeString());
             console.log('🕒 Current Time Slot:', getCurrentTimeSlot());
             console.log('📌 Active Posts:', ACTIVE_POSTS.length);
             console.log('🌍 Languages: Urdu, Roman Urdu, Hindi');
             console.log('💾 All data saved in Local Storage');
-            console.log('✨ Full multi-language support enabled!');
+            console.log('✨ PWA ready! Install as app for better experience.');
+            console.log('📱 WhatsApp sharing enabled!');
+            console.log('💾 Backup & Restore enabled!');
         });
     </script>
 </body>
