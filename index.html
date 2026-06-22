@@ -1385,7 +1385,13 @@
                     <!-- Date Display -->
                     <div class="date-display">
                         <span class="gregorian-date" id="gregorianDate">Monday, 22 June 2026</span>
-                        <span class="islamic-date" id="islamicDate">7 Dhul-Hijjah 1447</span>
+                </div
+                            
+                        <div class="date-display">
+    <span class="gregorian-date" id="gregorianDate"></span>
+    <span class="islamic-date" id="islamicDate">تاریخ لوڈ ہو رہی ہے...</span>
+</div>
+
                     </div>
                     
                     <!-- Darood Display -->
@@ -3605,6 +3611,17 @@
             console.log('🕌 Darood display active during prayer times');
             console.log('⚡ Performance optimized');
         });
+        // یہ فنکشن خود بخود تاریخ کو اپ ڈیٹ کرے گا
+updateIslamicDate() {
+    const el = document.getElementById('islamicDate');
+    if (!el) return; // اگر HTML میں ID نہیں ملی تو یہ رک جائے گا
+
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const dateStr = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', options).format(new Date());
+    
+    el.innerText = dateStr;
+}
+
     </script>
 </body>
 </html>
