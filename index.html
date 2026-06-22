@@ -1776,38 +1776,28 @@
         let currentLanguage = 'ur';
         
         // ============================================================
-        // 5. DATE FUNCTIONS (Gregorian & Islamic)
-        // ============================================================
-        function updateGregorianDate() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('gregorianDate').textContent = now.toLocaleDateString('en-US', options);
-        }
+// 5. NEW DATE FUNCTIONS (Automatic & Accurate)
+// ============================================================
+
+function updateDates() {
+    const now = new Date();
+
+    // 1. Gregorian Date (انگریزی تاریخ)
+    const gregorianOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('gregorianDate').textContent = now.toLocaleDateString('en-US', gregorianOptions);
+
+    // 2. Islamic Date (ام القریٰ کیلنڈر کے مطابق)
+    const islamicOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    const islamicDateStr = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', islamicOptions).format(now);
+    
+    // یہ براہ راست آپ کے HTML کے span id="islamicDate" میں تاریخ ڈال دے گا
+    document.getElementById('islamicDate').textContent = islamicDateStr;
+}
+
+// ایپ شروع ہوتے ہی تاریخ اپ ڈیٹ کرنے کے لیے
+updateDates();
+
         
-        // Umm al-Qura based Islamic date (approximate)
-        const ummAlQura = {
-            1440: 2458196,
-            1441: 2458550,
-            1442: 2458905,
-            1443: 2459259,
-            1444: 2459614,
-            1445: 2459969,
-            1446: 2460323,
-            1447: 2460678,
-            1448: 2461032,
-            1449: 2461387,
-            1450: 2461742,
-            1451: 2462096,
-            1452: 2462451,
-            1453: 2462805,
-            1454: 2463160,
-            1455: 2463514,
-            1456: 2463869,
-            1457: 2464224,
-            1458: 2464578,
-            1459: 2464933,
-            1460: 2465287
-        };
         
         function gregorianToJulianDay(year, month, day) {
             if (month <= 2) { year--;
