@@ -3628,6 +3628,18 @@
             console.log('🕌 Darood display active during prayer times');
             console.log('⚡ Performance optimized');
         });
+       function updateIslamicDate() {
+    // سعودی عرب کے مطابق اسلامی تاریخ
+    const dateStr = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', {
+        day: 'numeric', month: 'long', year: 'numeric'
+    }).format(new Date());
+
+    const display = document.getElementById('islamic-date-display');
+    if (display) {
+        display.innerText = dateStr;
+    }
+}
+ 
     </script>
 </body>
 </html>
