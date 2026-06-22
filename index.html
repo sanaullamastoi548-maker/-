@@ -2332,9 +2332,22 @@
                     } else if (this.isVisible && !this.animationId) {
                         this.animate();
                     }
-                });
-            }
+                    
+                     });
+                }
             
+            setupEvents() {
+    console.log("setupEvents چل رہا ہے!"); // یہ چیک کرنے کے لیے کہ کیا فنکشن لوڈ بھی ہو رہا ہے
+
+    this.elements.copyBtn.addEventListener('click', () => {
+        alert("کاپی بٹن کام کر رہا ہے!"); // اگر یہ الرٹ آ گیا تو سمجھیں بٹن ٹھیک ہے
+    });
+
+    this.elements.shareBtn.addEventListener('click', () => {
+        alert("شیئر بٹن کام کر رہا ہے!"); 
+    });
+}
+
             initializeScene() {
                 this.sceneObjects = [];
                 switch (this.timeMode) {
