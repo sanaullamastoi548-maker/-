@@ -1385,8 +1385,8 @@
                     <!-- Date Display -->
                     <div class="date-display">
                         <span class="gregorian-date" id="gregorianDate">Monday, 22 June 2026</span>
-                        <div id="islamic-date-display"></div>
-              </div>
+                        <span class="islamic-date" id="islamicDate">7 Dhul-Hijjah 1447</span>
+                    </div>
                     
                     <!-- Darood Display -->
                     <div class="darood-display" id="daroodDisplay">
@@ -1418,7 +1418,7 @@
                         <span id="poetryCounter">1 / 1000+</span>
                     </div>
                     
-                  <div class="poetry-controls">
+                    <div class="poetry-controls">
                         <button class="glass-btn" id="prevBtn">⏮</button>
                         <button class="glass-btn" id="playBtn">⏸</button>
                         <button class="glass-btn" id="nextBtn">⏭</button>
@@ -2294,21 +2294,6 @@
                 this.setupVisibility();
                 this.animate();
             }
-
-           init() {
-    this.setupEvents();
-    this.updateDisplay();
-    this.renderPosts();
-    // ... آپ کا باقی پرانا کوڈ ...
-    
-    // یہاں یہ نئی لائن لکھیں:
-    this.updateIslamicDate(); 
-    
-    // باقی لائنیں جو پہلے سے موجود ہیں
-    this.updateTimeSchedule();
-    this.startTimeUpdate();
-    // ...
-           }
             
             getTimeMode() {
                 const h = new Date().getHours();
@@ -2347,22 +2332,9 @@
                     } else if (this.isVisible && !this.animationId) {
                         this.animate();
                     }
-                    
-                     });
-                }
+                });
+            }
             
-            setupEvents() {
-    console.log("setupEvents چل رہا ہے!"); // یہ چیک کرنے کے لیے کہ کیا فنکشن لوڈ بھی ہو رہا ہے
-
-    this.elements.copyBtn.addEventListener('click', () => {
-        alert("کاپی بٹن کام کر رہا ہے!"); // اگر یہ الرٹ آ گیا تو سمجھیں بٹن ٹھیک ہے
-    });
-
-    this.elements.shareBtn.addEventListener('click', () => {
-        alert("شیئر بٹن کام کر رہا ہے!"); 
-    });
-}
-
             initializeScene() {
                 this.sceneObjects = [];
                 switch (this.timeMode) {
@@ -3012,19 +2984,6 @@
                 this.favorites = StorageManager.getFavorites();
                 this.init();
             }
-
-            // یہ آپ کی کلاس کے اندر ہونا چاہیے
-         updateDisplay() {
-         // 1. شاعری اپ ڈیٹ کریں
-         const currentPoem = this.poetryManager.getCurrentPoem();
-         if (currentPoem) {
-           this.elements.poetryLines.innerText = currentPoem[this.poetryManager.currentLang].join('\n');
-          }
-
-        // 2. اگر کوئی اور چیزیں اپ ڈیٹ کرنی ہیں تو وہ بھی یہاں لکھیں
-        this.renderPosts();
-}
-
             
             init() {
                 this.elements = {
@@ -3070,8 +3029,11 @@
                 this.startTimeUpdate();
                 this.startKeywordRotation();
                 this.poetryManager.startAutoRotation(() => {
-                 });
-                
+                    this.updateDisplay();
+                    this.renderPosts();
+                    this.updateTimeSchedule();
+                    this.renderActivePosts();
+                });
                 
                 // Load shared poems if Firebase available
                 if (database) {
@@ -3643,18 +3605,6 @@
             console.log('🕌 Darood display active during prayer times');
             console.log('⚡ Performance optimized');
         });
-       function updateIslamicDate() {
-    // سعودی عرب کے مطابق اسلامی تاریخ
-    const dateStr = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', {
-        day: 'numeric', month: 'long', year: 'numeric'
-    }).format(new Date());
-
-    const display = document.getElementById('islamic-date-display');
-    if (display) {
-        display.innerText = dateStr;
-    }
-}
- 
     </script>
 </body>
 </html>
