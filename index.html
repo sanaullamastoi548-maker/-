@@ -1418,7 +1418,7 @@
                         <span id="poetryCounter">1 / 1000+</span>
                     </div>
                     
-                    <div class="poetry-controls">
+                  <div class="poetry-controls">
                         <button class="glass-btn" id="prevBtn">⏮</button>
                         <button class="glass-btn" id="playBtn">⏸</button>
                         <button class="glass-btn" id="nextBtn">⏭</button>
@@ -2984,6 +2984,19 @@
                 this.favorites = StorageManager.getFavorites();
                 this.init();
             }
+
+            // یہ آپ کی کلاس کے اندر ہونا چاہیے
+         updateDisplay() {
+         // 1. شاعری اپ ڈیٹ کریں
+         const currentPoem = this.poetryManager.getCurrentPoem();
+         if (currentPoem) {
+           this.elements.poetryLines.innerText = currentPoem[this.poetryManager.currentLang].join('\n');
+          }
+
+        // 2. اگر کوئی اور چیزیں اپ ڈیٹ کرنی ہیں تو وہ بھی یہاں لکھیں
+        this.renderPosts();
+}
+
             
             init() {
                 this.elements = {
@@ -3029,11 +3042,8 @@
                 this.startTimeUpdate();
                 this.startKeywordRotation();
                 this.poetryManager.startAutoRotation(() => {
-                    this.updateDisplay();
-                    this.renderPosts();
-                    this.updateTimeSchedule();
-                    this.renderActivePosts();
-                });
+                 });
+                
                 
                 // Load shared poems if Firebase available
                 if (database) {
