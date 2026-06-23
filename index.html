@@ -1335,7 +1335,7 @@
                     <!-- Date Display - will be updated dynamically -->
                     <div class="date-display">
                         <span class="gregorian-date" id="gregorianDate">Loading...</span>
-                        <span class="islamic-date" id="islamicDate">Loading...</span>
+                        <span class="islamic-date" id="islamicDate">7 Muharram 1448</span>
                     </div>
                     
                     <!-- Darood Display -->
@@ -1727,6 +1727,10 @@
         // ============================================================
         // 5. DATE FUNCTIONS - FIXED: CORRECT ISLAMIC DATE (MUHARRAM)
         // ============================================================
+        function updateIslamicDate() {
+    const h = getIslamicDate();
+    document.getElementById('islamicDate').textContent = `${h.day} ${h.month} ${h.year}`;
+        }
         
         function updateGregorianDate() {
             const now = new Date();
@@ -1847,6 +1851,10 @@
         function updateDates() {
             updateGregorianDate();
             updateIslamicDate();
+        }
+        function updateIslamicDate() {
+    // آپ خود تاریخ تبدیل کریں
+    document.getElementById('islamicDate').textContent = '7 Muharram 1448';
         }
         
         // ============================================================
